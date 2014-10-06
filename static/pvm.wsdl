@@ -1,0 +1,3182 @@
+<?xml version="1.0" ?>
+<wsdl:definitions name="pvmapi" targetNamespace="urn:pvmapi" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="urn:pvmapi" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <wsdl:types>
+      <xsd:schema targetNamespace="urn:pvmapi" xmlns="http://www.w3.org/2001/XMLSchema">
+         <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+         <xsd:complexType name="ResultTriple">
+            <xsd:complexContent>
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:anyType[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="TArrayOfString">
+            <xsd:complexContent mixed="false">
+               <xsd:restriction base="soapenc:Array">
+                  <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+               </xsd:restriction>
+            </xsd:complexContent>
+         </xsd:complexType>
+         <xsd:complexType name="TCloudParamStruct">
+            <xsd:sequence>
+               <xsd:element name="friendlyName" type="xsd:string"/>
+               <xsd:element name="required" type="xsd:boolean"/>
+               <xsd:element name="type" type="xsd:string"/>
+               <xsd:element name="values" type="tns:TArrayOfString"/>
+               <xsd:element name="defaultVal" type="xsd:string"/>
+               <xsd:element name="region" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="TKeySecureStruct">
+            <xsd:sequence>
+               <xsd:element name="NAE_IP" type="xsd:string"/>
+               <xsd:element name="NAE_Port" type="xsd:string"/>
+               <xsd:element name="Protocol" type="xsd:string"/>
+               <xsd:element name="CA_Cert" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="TCloudCredStruct">
+            <xsd:sequence>
+               <xsd:element name="id" type="xsd:string"/>
+               <xsd:element name="secret" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="TCloudCredDictStruct">
+            <xsd:sequence>
+               <xsd:element name="vsphere" type="tns:TCloudCredStruct"/>
+               <xsd:element name="physical" type="tns:TCloudCredStruct"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="TElasticIpParamStruct">
+            <xsd:sequence>
+               <xsd:element name="interface" type="xsd:string"/>
+               <xsd:element name="alias_number" type="xsd:string"/>
+               <xsd:element name="netmask" type="xsd:string"/>
+               <xsd:element name="broadcast_ip" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="addDNSIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="addDNSOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="addInstanceGroupIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="addInstanceGroupOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="addNetworkInterfaceIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+      <wsdl:part name="v4" type="xsd:string"/>
+      <wsdl:part name="v5" type="xsd:string"/>
+      <wsdl:part name="v6" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="addNetworkInterfaceOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="addNetworkRouteIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+      <wsdl:part name="v4" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="addNetworkRouteOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="addRoleIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="addRoleOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="addUserIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="addUserOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="applyNetworkChangesIn"/>
+   <wsdl:message name="applyNetworkChangesOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="backupNetworkConfigurationIn"/>
+   <wsdl:message name="backupNetworkConfigurationOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="bootupProtectedInstanceExAsyncIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="bootupProtectedInstanceExAsyncOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="bootupProtectedInstanceExIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="bootupProtectedInstanceExOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="bootupProtectedInstanceAsyncIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="bootupProtectedInstanceAsyncOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="bootupProtectedInstanceIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="bootupProtectedInstanceOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="cancelClearLogJobIn">
+      <wsdl:part name="v1" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="cancelClearLogJobOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="cancelNetworkChangesIn"/>
+   <wsdl:message name="cancelNetworkChangesOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="changePasswordForUserIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="changePasswordForUserOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="changePasswordIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="changePasswordOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="checkKeySecureIn">
+      <wsdl:part name="v1" type="xsd:boolean"/>
+   </wsdl:message>
+   <wsdl:message name="checkKeySecureOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="configureHaServiceIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="configureHaServiceOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="configureHeartBeatIn">
+      <wsdl:part name="v1" type="xsd:integer"/>
+      <wsdl:part name="v2" type="xsd:integer"/>
+      <wsdl:part name="v3" type="xsd:integer"/>
+   </wsdl:message>
+   <wsdl:message name="configureHeartBeatOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="debugLogTransferIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+      <wsdl:part name="v4" type="xsd:string"/>
+      <wsdl:part name="v5" type="xsd:string"/>
+      <wsdl:part name="v6" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="debugLogTransferOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="deleteDNSIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="deleteDNSOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="deleteInstanceGroupIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="deleteInstanceGroupOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="deleteNetworkInterfaceIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="deleteNetworkInterfaceOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="deleteNetworkRouteIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="deleteNetworkRouteOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="deleteProxyConfigIn"/>
+   <wsdl:message name="deleteProxyConfigOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="deleteRoleIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="deleteRoleOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="deleteSSLCertificateIn"/>
+   <wsdl:message name="deleteSSLCertificateOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="deleteUserIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="deleteUserOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="deregisterPhysicalServerIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="deregisterPhysicalServerOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="disableNTPIn"/>
+   <wsdl:message name="disableNTPOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="disablePhysicalServerSupportIn"/>
+   <wsdl:message name="disablePhysicalServerSupportOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="disableSNMPTrapsIn"/>
+   <wsdl:message name="disableSNMPTrapsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="disableSyslogForwardingIn"/>
+   <wsdl:message name="disableSyslogForwardingOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="disableUnattendedRebootAllIn"/>
+   <wsdl:message name="disableUnattendedRebootAllOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="disableUnattendedRebootGroupIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="disableUnattendedRebootGroupOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="disableUnattendedRebootIn">
+      <wsdl:part name="v1" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="disableUnattendedRebootOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="enableNTPIn">
+      <wsdl:part name="v1" type="xsd:integer"/>
+   </wsdl:message>
+   <wsdl:message name="enableNTPOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="enablePartitionIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="enablePartitionOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="enablePhysicalServerSupportIn"/>
+   <wsdl:message name="enablePhysicalServerSupportOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="enableSNMPTrapsIn"/>
+   <wsdl:message name="enableSNMPTrapsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="enableSafeNetStartGuardIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="enableSafeNetStartGuardOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="enableSyslogForwardingIn"/>
+   <wsdl:message name="enableSyslogForwardingOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="enableUnattendedRebootAllIn"/>
+   <wsdl:message name="enableUnattendedRebootAllOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="enableUnattendedRebootGroupIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="enableUnattendedRebootGroupOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="enableUnattendedRebootIn">
+      <wsdl:part name="v1" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="enableUnattendedRebootOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="eulaAcceptIn"/>
+   <wsdl:message name="eulaAcceptOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="eulaTextIn"/>
+   <wsdl:message name="eulaTextOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="exportProvisioningDataIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+      <wsdl:part name="v4" type="xsd:string"/>
+      <wsdl:part name="v5" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="exportProvisioningDataOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="exportSettingsIn">
+      <wsdl:part name="v1" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="exportSettingsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="generateSSLCSRIn"/>
+   <wsdl:message name="generateSSLCSROut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getAggregateRefreshRateIn"/>
+   <wsdl:message name="getAggregateRefreshRateOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getAutoUpdateIpFlagIn"/>
+   <wsdl:message name="getAutoUpdateIpFlagOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getChallengeResponseKeyNameIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getChallengeResponseKeyNameOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getClientEnvironmentIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getClientEnvironmentOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getClientInfoIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getClientInfoOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getCloudParamsIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getCloudParamsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getComplianceReportIn"/>
+   <wsdl:message name="getComplianceReportOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getCurrentPermissionsIn"/>
+   <wsdl:message name="getCurrentPermissionsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getDescriptionForGroupIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getDescriptionForGroupOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getDescriptionForRoleIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getDescriptionForRoleOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getFirstRunNextStepIn"/>
+   <wsdl:message name="getFirstRunNextStepOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getGroupStatusIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getGroupStatusOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getGroupsforInstanceIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getGroupsforInstanceOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getHaConfigIn"/>
+   <wsdl:message name="getHaConfigOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getHaHeartBeatConfigIn"/>
+   <wsdl:message name="getHaHeartBeatConfigOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getHaStatusIn"/>
+   <wsdl:message name="getHaStatusOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getInstanceGroupIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getInstanceGroupOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getInstancePollIntervalIn"/>
+   <wsdl:message name="getInstancePollIntervalOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getInstanceStatusIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getInstanceStatusOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getJobDetailsIn">
+      <wsdl:part name="v1" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="getJobDetailsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getKeySecureCredentialsIn"/>
+   <wsdl:message name="getKeySecureCredentialsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getKeySecurePropertiesIn"/>
+   <wsdl:message name="getKeySecurePropertiesOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getMaxOfflinePeriodIn"/>
+   <wsdl:message name="getMaxOfflinePeriodOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getNTPIntervalIn"/>
+   <wsdl:message name="getNTPIntervalOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getNTPServersIn"/>
+   <wsdl:message name="getNTPServersOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getNTPStateIn"/>
+   <wsdl:message name="getNTPStateOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getNetworkInterfaceInfoIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getNetworkInterfaceInfoOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getPVMConfigNextCliIn"/>
+   <wsdl:message name="getPVMConfigNextCliOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getPVMConfigNextStepIn"/>
+   <wsdl:message name="getPVMConfigNextStepOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getPartitionKeyNameIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getPartitionKeyNameOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getPartitionStatusIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getPartitionStatusOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getPartitionsIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getPartitionsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getPermissionsForRoleIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getPermissionsForRoleOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getPhysicalMachineInfoIn">
+      <wsdl:part name="v1" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="getPhysicalMachineInfoOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getPhysicalServerResponseIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getPhysicalServerResponseOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getPhysicalServerStatusIn"/>
+   <wsdl:message name="getPhysicalServerStatusOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getPowerStatusOverviewIn"/>
+   <wsdl:message name="getPowerStatusOverviewOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getProxyConfigIn"/>
+   <wsdl:message name="getProxyConfigOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getSNMPTrapConfigIn"/>
+   <wsdl:message name="getSNMPTrapConfigOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getSafeNetStartGuardConfigIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getSafeNetStartGuardConfigOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getStatusOverviewIn"/>
+   <wsdl:message name="getStatusOverviewOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getSysLogServerInfoIn"/>
+   <wsdl:message name="getSysLogServerInfoOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getSystemStatusOverviewIn"/>
+   <wsdl:message name="getSystemStatusOverviewOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getUserRoleIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getUserRoleOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getUserScopeIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="getUserScopeOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="getVersionIn"/>
+   <wsdl:message name="getVersionOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="importSettingsIn">
+      <wsdl:part name="v1" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="importSettingsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="isEulaDoneIn"/>
+   <wsdl:message name="isEulaDoneOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listApiIn"/>
+   <wsdl:message name="listApiOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listClearLogJobsIn"/>
+   <wsdl:message name="listClearLogJobsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listCloudCredentialsIn"/>
+   <wsdl:message name="listCloudCredentialsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listDNSIn"/>
+   <wsdl:message name="listDNSOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listInstanceGroupsIn"/>
+   <wsdl:message name="listInstanceGroupsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listInstancesJobIDIn"/>
+   <wsdl:message name="listInstancesJobIDOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listInstancesWithPartitionsSharingKeysIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="listInstancesWithPartitionsSharingKeysOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listInstancesIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="listInstancesOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listNetworkInterfacesIn"/>
+   <wsdl:message name="listNetworkInterfacesOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listNetworkRoutesIn"/>
+   <wsdl:message name="listNetworkRoutesOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listProtectedInstancesIn"/>
+   <wsdl:message name="listProtectedInstancesOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listRegionsIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="listRegionsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listRolesExIn"/>
+   <wsdl:message name="listRolesExOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listRolesIn"/>
+   <wsdl:message name="listRolesOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listSupportedCloudsIn"/>
+   <wsdl:message name="listSupportedCloudsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listUsersExIn"/>
+   <wsdl:message name="listUsersExOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="listUsersIn"/>
+   <wsdl:message name="listUsersOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="meteringGetManagedClientInfoIn"/>
+   <wsdl:message name="meteringGetManagedClientInfoOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="pvm_getAddressIn"/>
+   <wsdl:message name="pvm_getAddressOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="pvm_getCACertIn"/>
+   <wsdl:message name="pvm_getCACertOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="pvm_setAddressIn">
+      <wsdl:part name="v1" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="pvm_setAddressOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="pvm_setCACertIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="pvm_setCACertOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="reassignPartitionToInstanceIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="reassignPartitionToInstanceOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="reassignRoleIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="reassignRoleOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="rebootSystemIn"/>
+   <wsdl:message name="rebootSystemOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="registerInstanceIpIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="registerInstanceIpOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="registerPeerIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:integer"/>
+   </wsdl:message>
+   <wsdl:message name="registerPeerOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="registerPhysicalMachineIn">
+      <wsdl:part name="v1" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="registerPhysicalMachineOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="resumeUnattendedRebootIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="resumeUnattendedRebootOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="revertNetworkConfigurationIn"/>
+   <wsdl:message name="revertNetworkConfigurationOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="runNetstatIn"/>
+   <wsdl:message name="runNetstatOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="runPingIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="runPingOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="runTcpcheckIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="runTcpcheckOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="runTracerouteIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="runTracerouteOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="safeLogTransferIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+      <wsdl:part name="v4" type="xsd:string"/>
+      <wsdl:part name="v5" type="xsd:string"/>
+      <wsdl:part name="v6" type="xsd:integer"/>
+      <wsdl:part name="v7" type="xsd:integer"/>
+      <wsdl:part name="v8" type="xsd:string"/>
+      <wsdl:part name="v9" type="xsd:string"/>
+      <wsdl:part name="v10" type="xsd:string"/>
+      <wsdl:part name="v11" type="xsd:string"/>
+      <wsdl:part name="v12" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="safeLogTransferOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="saveSSLCertificateIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="saveSSLCertificateOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="scheduleClearLogJobIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:integer"/>
+      <wsdl:part name="v3" type="xsd:integer"/>
+      <wsdl:part name="v4" type="xsd:integer"/>
+      <wsdl:part name="v5" type="xsd:string"/>
+      <wsdl:part name="v6" type="xsd:integer"/>
+   </wsdl:message>
+   <wsdl:message name="scheduleClearLogJobOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="server_getManagedStatusIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="server_getManagedStatusOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="server_registerMachineIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="server_registerMachineOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="server_restartGuiServiceIn"/>
+   <wsdl:message name="server_restartGuiServiceOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="setAutoUpdateIpFlagIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="setAutoUpdateIpFlagOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="setInstanceGroupIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="setInstanceGroupOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="setInstancePollIntervalIn">
+      <wsdl:part name="v1" type="xsd:integer"/>
+   </wsdl:message>
+   <wsdl:message name="setInstancePollIntervalOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="setKeySecureCACertIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="setKeySecureCACertOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="setKeySecureCredentialsIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="setKeySecureCredentialsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="setKeySecurePropertiesIn">
+      <wsdl:part name="v1" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="setKeySecurePropertiesOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="setMaxOfflinePeriodIn">
+      <wsdl:part name="v1" type="xsd:integer"/>
+   </wsdl:message>
+   <wsdl:message name="setMaxOfflinePeriodOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="setNTPIntervalIn">
+      <wsdl:part name="v1" type="xsd:integer"/>
+   </wsdl:message>
+   <wsdl:message name="setNTPIntervalOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="setNTPServersIn">
+      <wsdl:part name="v1" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="setNTPServersOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="setProxyConfigIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+      <wsdl:part name="v4" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="setProxyConfigOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="setSafeNetStartGuardConfigIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="setSafeNetStartGuardConfigOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="shutdownSystemIn"/>
+   <wsdl:message name="shutdownSystemOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="startInstanceIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="startInstanceOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="submitLogMessageIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="submitLogMessageOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="suspendUnattendedRebootIn"/>
+   <wsdl:message name="suspendUnattendedRebootOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="unregisterAllPeersIn"/>
+   <wsdl:message name="unregisterAllPeersOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="unregisterPeerIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="unregisterPeerOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="updateAggregateDataIn"/>
+   <wsdl:message name="updateAggregateDataOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="updateAggregateRefreshRateIn">
+      <wsdl:part name="v1" type="xsd:integer"/>
+   </wsdl:message>
+   <wsdl:message name="updateAggregateRefreshRateOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="updateCloudCredentialsIn">
+      <wsdl:part name="v1" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="updateCloudCredentialsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="updateGroupDescriptionIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="updateGroupDescriptionOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="updateNetworkInterfaceIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+      <wsdl:part name="v4" type="xsd:string"/>
+      <wsdl:part name="v5" type="xsd:string"/>
+      <wsdl:part name="v6" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="updateNetworkInterfaceOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="updateRoleDescriptionIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="updateRoleDescriptionOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="updateRolePermissionsIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="updateRolePermissionsOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="updateSNMPTrapConfigIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+      <wsdl:part name="v4" type="xsd:integer"/>
+      <wsdl:part name="v5" type="xsd:string"/>
+      <wsdl:part name="v6" type="xsd:string"/>
+      <wsdl:part name="v7" type="xsd:string"/>
+      <wsdl:part name="v8" type="xsd:string"/>
+      <wsdl:part name="v9" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="updateSNMPTrapConfigOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="updateSyslogServerIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:string"/>
+      <wsdl:part name="v3" type="xsd:string"/>
+      <wsdl:part name="v4" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="updateSyslogServerOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="updateUserScopeIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+      <wsdl:part name="v2" type="xsd:anyType"/>
+   </wsdl:message>
+   <wsdl:message name="updateUserScopeOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:message name="uploadSignedSSLCertificateIn">
+      <wsdl:part name="v1" type="xsd:string"/>
+   </wsdl:message>
+   <wsdl:message name="uploadSignedSSLCertificateOut">
+      <part name="Result" type="tns:ResultTriple"/>
+   </wsdl:message>
+   <wsdl:portType name="pvmSOAPPortType">
+      <wsdl:operation name="addDNS">
+         <wsdl:input message="tns:addDNSIn"/>
+         <wsdl:output message="tns:addDNSOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="addInstanceGroup">
+         <wsdl:input message="tns:addInstanceGroupIn"/>
+         <wsdl:output message="tns:addInstanceGroupOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="addNetworkInterface">
+         <wsdl:input message="tns:addNetworkInterfaceIn"/>
+         <wsdl:output message="tns:addNetworkInterfaceOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="addNetworkRoute">
+         <wsdl:input message="tns:addNetworkRouteIn"/>
+         <wsdl:output message="tns:addNetworkRouteOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="addRole">
+         <wsdl:input message="tns:addRoleIn"/>
+         <wsdl:output message="tns:addRoleOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="addUser">
+         <wsdl:input message="tns:addUserIn"/>
+         <wsdl:output message="tns:addUserOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="applyNetworkChanges">
+         <wsdl:input message="tns:applyNetworkChangesIn"/>
+         <wsdl:output message="tns:applyNetworkChangesOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="backupNetworkConfiguration">
+         <wsdl:input message="tns:backupNetworkConfigurationIn"/>
+         <wsdl:output message="tns:backupNetworkConfigurationOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="bootupProtectedInstanceExAsync">
+         <wsdl:input message="tns:bootupProtectedInstanceExAsyncIn"/>
+         <wsdl:output message="tns:bootupProtectedInstanceExAsyncOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="bootupProtectedInstanceEx">
+         <wsdl:input message="tns:bootupProtectedInstanceExIn"/>
+         <wsdl:output message="tns:bootupProtectedInstanceExOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="bootupProtectedInstanceAsync">
+         <wsdl:input message="tns:bootupProtectedInstanceAsyncIn"/>
+         <wsdl:output message="tns:bootupProtectedInstanceAsyncOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="bootupProtectedInstance">
+         <wsdl:input message="tns:bootupProtectedInstanceIn"/>
+         <wsdl:output message="tns:bootupProtectedInstanceOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="cancelClearLogJob">
+         <wsdl:input message="tns:cancelClearLogJobIn"/>
+         <wsdl:output message="tns:cancelClearLogJobOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="cancelNetworkChanges">
+         <wsdl:input message="tns:cancelNetworkChangesIn"/>
+         <wsdl:output message="tns:cancelNetworkChangesOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="changePasswordForUser">
+         <wsdl:input message="tns:changePasswordForUserIn"/>
+         <wsdl:output message="tns:changePasswordForUserOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="changePassword">
+         <wsdl:input message="tns:changePasswordIn"/>
+         <wsdl:output message="tns:changePasswordOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="checkKeySecure">
+         <wsdl:input message="tns:checkKeySecureIn"/>
+         <wsdl:output message="tns:checkKeySecureOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="configureHaService">
+         <wsdl:input message="tns:configureHaServiceIn"/>
+         <wsdl:output message="tns:configureHaServiceOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="configureHeartBeat">
+         <wsdl:input message="tns:configureHeartBeatIn"/>
+         <wsdl:output message="tns:configureHeartBeatOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="debugLogTransfer">
+         <wsdl:input message="tns:debugLogTransferIn"/>
+         <wsdl:output message="tns:debugLogTransferOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="deleteDNS">
+         <wsdl:input message="tns:deleteDNSIn"/>
+         <wsdl:output message="tns:deleteDNSOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="deleteInstanceGroup">
+         <wsdl:input message="tns:deleteInstanceGroupIn"/>
+         <wsdl:output message="tns:deleteInstanceGroupOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="deleteNetworkInterface">
+         <wsdl:input message="tns:deleteNetworkInterfaceIn"/>
+         <wsdl:output message="tns:deleteNetworkInterfaceOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="deleteNetworkRoute">
+         <wsdl:input message="tns:deleteNetworkRouteIn"/>
+         <wsdl:output message="tns:deleteNetworkRouteOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="deleteProxyConfig">
+         <wsdl:input message="tns:deleteProxyConfigIn"/>
+         <wsdl:output message="tns:deleteProxyConfigOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="deleteRole">
+         <wsdl:input message="tns:deleteRoleIn"/>
+         <wsdl:output message="tns:deleteRoleOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="deleteSSLCertificate">
+         <wsdl:input message="tns:deleteSSLCertificateIn"/>
+         <wsdl:output message="tns:deleteSSLCertificateOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="deleteUser">
+         <wsdl:input message="tns:deleteUserIn"/>
+         <wsdl:output message="tns:deleteUserOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="deregisterPhysicalServer">
+         <wsdl:input message="tns:deregisterPhysicalServerIn"/>
+         <wsdl:output message="tns:deregisterPhysicalServerOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="disableNTP">
+         <wsdl:input message="tns:disableNTPIn"/>
+         <wsdl:output message="tns:disableNTPOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="disablePhysicalServerSupport">
+         <wsdl:input message="tns:disablePhysicalServerSupportIn"/>
+         <wsdl:output message="tns:disablePhysicalServerSupportOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="disableSNMPTraps">
+         <wsdl:input message="tns:disableSNMPTrapsIn"/>
+         <wsdl:output message="tns:disableSNMPTrapsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="disableSyslogForwarding">
+         <wsdl:input message="tns:disableSyslogForwardingIn"/>
+         <wsdl:output message="tns:disableSyslogForwardingOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="disableUnattendedRebootAll">
+         <wsdl:input message="tns:disableUnattendedRebootAllIn"/>
+         <wsdl:output message="tns:disableUnattendedRebootAllOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="disableUnattendedRebootGroup">
+         <wsdl:input message="tns:disableUnattendedRebootGroupIn"/>
+         <wsdl:output message="tns:disableUnattendedRebootGroupOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="disableUnattendedReboot">
+         <wsdl:input message="tns:disableUnattendedRebootIn"/>
+         <wsdl:output message="tns:disableUnattendedRebootOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="enableNTP">
+         <wsdl:input message="tns:enableNTPIn"/>
+         <wsdl:output message="tns:enableNTPOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="enablePartition">
+         <wsdl:input message="tns:enablePartitionIn"/>
+         <wsdl:output message="tns:enablePartitionOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="enablePhysicalServerSupport">
+         <wsdl:input message="tns:enablePhysicalServerSupportIn"/>
+         <wsdl:output message="tns:enablePhysicalServerSupportOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="enableSNMPTraps">
+         <wsdl:input message="tns:enableSNMPTrapsIn"/>
+         <wsdl:output message="tns:enableSNMPTrapsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="enableSafeNetStartGuard">
+         <wsdl:input message="tns:enableSafeNetStartGuardIn"/>
+         <wsdl:output message="tns:enableSafeNetStartGuardOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="enableSyslogForwarding">
+         <wsdl:input message="tns:enableSyslogForwardingIn"/>
+         <wsdl:output message="tns:enableSyslogForwardingOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="enableUnattendedRebootAll">
+         <wsdl:input message="tns:enableUnattendedRebootAllIn"/>
+         <wsdl:output message="tns:enableUnattendedRebootAllOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="enableUnattendedRebootGroup">
+         <wsdl:input message="tns:enableUnattendedRebootGroupIn"/>
+         <wsdl:output message="tns:enableUnattendedRebootGroupOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="enableUnattendedReboot">
+         <wsdl:input message="tns:enableUnattendedRebootIn"/>
+         <wsdl:output message="tns:enableUnattendedRebootOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="eulaAccept">
+         <wsdl:input message="tns:eulaAcceptIn"/>
+         <wsdl:output message="tns:eulaAcceptOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="eulaText">
+         <wsdl:input message="tns:eulaTextIn"/>
+         <wsdl:output message="tns:eulaTextOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="exportProvisioningData">
+         <wsdl:input message="tns:exportProvisioningDataIn"/>
+         <wsdl:output message="tns:exportProvisioningDataOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="exportSettings">
+         <wsdl:input message="tns:exportSettingsIn"/>
+         <wsdl:output message="tns:exportSettingsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="generateSSLCSR">
+         <wsdl:input message="tns:generateSSLCSRIn"/>
+         <wsdl:output message="tns:generateSSLCSROut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getAggregateRefreshRate">
+         <wsdl:input message="tns:getAggregateRefreshRateIn"/>
+         <wsdl:output message="tns:getAggregateRefreshRateOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getAutoUpdateIpFlag">
+         <wsdl:input message="tns:getAutoUpdateIpFlagIn"/>
+         <wsdl:output message="tns:getAutoUpdateIpFlagOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getChallengeResponseKeyName">
+         <wsdl:input message="tns:getChallengeResponseKeyNameIn"/>
+         <wsdl:output message="tns:getChallengeResponseKeyNameOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getClientEnvironment">
+         <wsdl:input message="tns:getClientEnvironmentIn"/>
+         <wsdl:output message="tns:getClientEnvironmentOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getClientInfo">
+         <wsdl:input message="tns:getClientInfoIn"/>
+         <wsdl:output message="tns:getClientInfoOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getCloudParams">
+         <wsdl:input message="tns:getCloudParamsIn"/>
+         <wsdl:output message="tns:getCloudParamsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getComplianceReport">
+         <wsdl:input message="tns:getComplianceReportIn"/>
+         <wsdl:output message="tns:getComplianceReportOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getCurrentPermissions">
+         <wsdl:input message="tns:getCurrentPermissionsIn"/>
+         <wsdl:output message="tns:getCurrentPermissionsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getDescriptionForGroup">
+         <wsdl:input message="tns:getDescriptionForGroupIn"/>
+         <wsdl:output message="tns:getDescriptionForGroupOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getDescriptionForRole">
+         <wsdl:input message="tns:getDescriptionForRoleIn"/>
+         <wsdl:output message="tns:getDescriptionForRoleOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getFirstRunNextStep">
+         <wsdl:input message="tns:getFirstRunNextStepIn"/>
+         <wsdl:output message="tns:getFirstRunNextStepOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getGroupStatus">
+         <wsdl:input message="tns:getGroupStatusIn"/>
+         <wsdl:output message="tns:getGroupStatusOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getGroupsforInstance">
+         <wsdl:input message="tns:getGroupsforInstanceIn"/>
+         <wsdl:output message="tns:getGroupsforInstanceOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getHaConfig">
+         <wsdl:input message="tns:getHaConfigIn"/>
+         <wsdl:output message="tns:getHaConfigOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getHaHeartBeatConfig">
+         <wsdl:input message="tns:getHaHeartBeatConfigIn"/>
+         <wsdl:output message="tns:getHaHeartBeatConfigOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getHaStatus">
+         <wsdl:input message="tns:getHaStatusIn"/>
+         <wsdl:output message="tns:getHaStatusOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getInstanceGroup">
+         <wsdl:input message="tns:getInstanceGroupIn"/>
+         <wsdl:output message="tns:getInstanceGroupOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getInstancePollInterval">
+         <wsdl:input message="tns:getInstancePollIntervalIn"/>
+         <wsdl:output message="tns:getInstancePollIntervalOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getInstanceStatus">
+         <wsdl:input message="tns:getInstanceStatusIn"/>
+         <wsdl:output message="tns:getInstanceStatusOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getJobDetails">
+         <wsdl:input message="tns:getJobDetailsIn"/>
+         <wsdl:output message="tns:getJobDetailsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getKeySecureCredentials">
+         <wsdl:input message="tns:getKeySecureCredentialsIn"/>
+         <wsdl:output message="tns:getKeySecureCredentialsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getKeySecureProperties">
+         <wsdl:input message="tns:getKeySecurePropertiesIn"/>
+         <wsdl:output message="tns:getKeySecurePropertiesOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getMaxOfflinePeriod">
+         <wsdl:input message="tns:getMaxOfflinePeriodIn"/>
+         <wsdl:output message="tns:getMaxOfflinePeriodOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getNTPInterval">
+         <wsdl:input message="tns:getNTPIntervalIn"/>
+         <wsdl:output message="tns:getNTPIntervalOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getNTPServers">
+         <wsdl:input message="tns:getNTPServersIn"/>
+         <wsdl:output message="tns:getNTPServersOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getNTPState">
+         <wsdl:input message="tns:getNTPStateIn"/>
+         <wsdl:output message="tns:getNTPStateOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getNetworkInterfaceInfo">
+         <wsdl:input message="tns:getNetworkInterfaceInfoIn"/>
+         <wsdl:output message="tns:getNetworkInterfaceInfoOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getPVMConfigNextCli">
+         <wsdl:input message="tns:getPVMConfigNextCliIn"/>
+         <wsdl:output message="tns:getPVMConfigNextCliOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getPVMConfigNextStep">
+         <wsdl:input message="tns:getPVMConfigNextStepIn"/>
+         <wsdl:output message="tns:getPVMConfigNextStepOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getPartitionKeyName">
+         <wsdl:input message="tns:getPartitionKeyNameIn"/>
+         <wsdl:output message="tns:getPartitionKeyNameOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getPartitionStatus">
+         <wsdl:input message="tns:getPartitionStatusIn"/>
+         <wsdl:output message="tns:getPartitionStatusOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getPartitions">
+         <wsdl:input message="tns:getPartitionsIn"/>
+         <wsdl:output message="tns:getPartitionsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getPermissionsForRole">
+         <wsdl:input message="tns:getPermissionsForRoleIn"/>
+         <wsdl:output message="tns:getPermissionsForRoleOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getPhysicalMachineInfo">
+         <wsdl:input message="tns:getPhysicalMachineInfoIn"/>
+         <wsdl:output message="tns:getPhysicalMachineInfoOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getPhysicalServerResponse">
+         <wsdl:input message="tns:getPhysicalServerResponseIn"/>
+         <wsdl:output message="tns:getPhysicalServerResponseOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getPhysicalServerStatus">
+         <wsdl:input message="tns:getPhysicalServerStatusIn"/>
+         <wsdl:output message="tns:getPhysicalServerStatusOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getPowerStatusOverview">
+         <wsdl:input message="tns:getPowerStatusOverviewIn"/>
+         <wsdl:output message="tns:getPowerStatusOverviewOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getProxyConfig">
+         <wsdl:input message="tns:getProxyConfigIn"/>
+         <wsdl:output message="tns:getProxyConfigOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getSNMPTrapConfig">
+         <wsdl:input message="tns:getSNMPTrapConfigIn"/>
+         <wsdl:output message="tns:getSNMPTrapConfigOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getSafeNetStartGuardConfig">
+         <wsdl:input message="tns:getSafeNetStartGuardConfigIn"/>
+         <wsdl:output message="tns:getSafeNetStartGuardConfigOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getStatusOverview">
+         <wsdl:input message="tns:getStatusOverviewIn"/>
+         <wsdl:output message="tns:getStatusOverviewOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getSysLogServerInfo">
+         <wsdl:input message="tns:getSysLogServerInfoIn"/>
+         <wsdl:output message="tns:getSysLogServerInfoOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getSystemStatusOverview">
+         <wsdl:input message="tns:getSystemStatusOverviewIn"/>
+         <wsdl:output message="tns:getSystemStatusOverviewOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getUserRole">
+         <wsdl:input message="tns:getUserRoleIn"/>
+         <wsdl:output message="tns:getUserRoleOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getUserScope">
+         <wsdl:input message="tns:getUserScopeIn"/>
+         <wsdl:output message="tns:getUserScopeOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="getVersion">
+         <wsdl:input message="tns:getVersionIn"/>
+         <wsdl:output message="tns:getVersionOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="importSettings">
+         <wsdl:input message="tns:importSettingsIn"/>
+         <wsdl:output message="tns:importSettingsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="isEulaDone">
+         <wsdl:input message="tns:isEulaDoneIn"/>
+         <wsdl:output message="tns:isEulaDoneOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listApi">
+         <wsdl:input message="tns:listApiIn"/>
+         <wsdl:output message="tns:listApiOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listClearLogJobs">
+         <wsdl:input message="tns:listClearLogJobsIn"/>
+         <wsdl:output message="tns:listClearLogJobsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listCloudCredentials">
+         <wsdl:input message="tns:listCloudCredentialsIn"/>
+         <wsdl:output message="tns:listCloudCredentialsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listDNS">
+         <wsdl:input message="tns:listDNSIn"/>
+         <wsdl:output message="tns:listDNSOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listInstanceGroups">
+         <wsdl:input message="tns:listInstanceGroupsIn"/>
+         <wsdl:output message="tns:listInstanceGroupsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listInstancesJobID">
+         <wsdl:input message="tns:listInstancesJobIDIn"/>
+         <wsdl:output message="tns:listInstancesJobIDOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listInstancesWithPartitionsSharingKeys">
+         <wsdl:input message="tns:listInstancesWithPartitionsSharingKeysIn"/>
+         <wsdl:output message="tns:listInstancesWithPartitionsSharingKeysOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listInstances">
+         <wsdl:input message="tns:listInstancesIn"/>
+         <wsdl:output message="tns:listInstancesOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listNetworkInterfaces">
+         <wsdl:input message="tns:listNetworkInterfacesIn"/>
+         <wsdl:output message="tns:listNetworkInterfacesOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listNetworkRoutes">
+         <wsdl:input message="tns:listNetworkRoutesIn"/>
+         <wsdl:output message="tns:listNetworkRoutesOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listProtectedInstances">
+         <wsdl:input message="tns:listProtectedInstancesIn"/>
+         <wsdl:output message="tns:listProtectedInstancesOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listRegions">
+         <wsdl:input message="tns:listRegionsIn"/>
+         <wsdl:output message="tns:listRegionsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listRolesEx">
+         <wsdl:input message="tns:listRolesExIn"/>
+         <wsdl:output message="tns:listRolesExOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listRoles">
+         <wsdl:input message="tns:listRolesIn"/>
+         <wsdl:output message="tns:listRolesOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listSupportedClouds">
+         <wsdl:input message="tns:listSupportedCloudsIn"/>
+         <wsdl:output message="tns:listSupportedCloudsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listUsersEx">
+         <wsdl:input message="tns:listUsersExIn"/>
+         <wsdl:output message="tns:listUsersExOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="listUsers">
+         <wsdl:input message="tns:listUsersIn"/>
+         <wsdl:output message="tns:listUsersOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="meteringGetManagedClientInfo">
+         <wsdl:input message="tns:meteringGetManagedClientInfoIn"/>
+         <wsdl:output message="tns:meteringGetManagedClientInfoOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="pvm_getAddress">
+         <wsdl:input message="tns:pvm_getAddressIn"/>
+         <wsdl:output message="tns:pvm_getAddressOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="pvm_getCACert">
+         <wsdl:input message="tns:pvm_getCACertIn"/>
+         <wsdl:output message="tns:pvm_getCACertOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="pvm_setAddress">
+         <wsdl:input message="tns:pvm_setAddressIn"/>
+         <wsdl:output message="tns:pvm_setAddressOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="pvm_setCACert">
+         <wsdl:input message="tns:pvm_setCACertIn"/>
+         <wsdl:output message="tns:pvm_setCACertOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="reassignPartitionToInstance">
+         <wsdl:input message="tns:reassignPartitionToInstanceIn"/>
+         <wsdl:output message="tns:reassignPartitionToInstanceOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="reassignRole">
+         <wsdl:input message="tns:reassignRoleIn"/>
+         <wsdl:output message="tns:reassignRoleOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="rebootSystem">
+         <wsdl:input message="tns:rebootSystemIn"/>
+         <wsdl:output message="tns:rebootSystemOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="registerInstanceIp">
+         <wsdl:input message="tns:registerInstanceIpIn"/>
+         <wsdl:output message="tns:registerInstanceIpOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="registerPeer">
+         <wsdl:input message="tns:registerPeerIn"/>
+         <wsdl:output message="tns:registerPeerOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="registerPhysicalMachine">
+         <wsdl:input message="tns:registerPhysicalMachineIn"/>
+         <wsdl:output message="tns:registerPhysicalMachineOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="resumeUnattendedReboot">
+         <wsdl:input message="tns:resumeUnattendedRebootIn"/>
+         <wsdl:output message="tns:resumeUnattendedRebootOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="revertNetworkConfiguration">
+         <wsdl:input message="tns:revertNetworkConfigurationIn"/>
+         <wsdl:output message="tns:revertNetworkConfigurationOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="runNetstat">
+         <wsdl:input message="tns:runNetstatIn"/>
+         <wsdl:output message="tns:runNetstatOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="runPing">
+         <wsdl:input message="tns:runPingIn"/>
+         <wsdl:output message="tns:runPingOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="runTcpcheck">
+         <wsdl:input message="tns:runTcpcheckIn"/>
+         <wsdl:output message="tns:runTcpcheckOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="runTraceroute">
+         <wsdl:input message="tns:runTracerouteIn"/>
+         <wsdl:output message="tns:runTracerouteOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="safeLogTransfer">
+         <wsdl:input message="tns:safeLogTransferIn"/>
+         <wsdl:output message="tns:safeLogTransferOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="saveSSLCertificate">
+         <wsdl:input message="tns:saveSSLCertificateIn"/>
+         <wsdl:output message="tns:saveSSLCertificateOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="scheduleClearLogJob">
+         <wsdl:input message="tns:scheduleClearLogJobIn"/>
+         <wsdl:output message="tns:scheduleClearLogJobOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="server_getManagedStatus">
+         <wsdl:input message="tns:server_getManagedStatusIn"/>
+         <wsdl:output message="tns:server_getManagedStatusOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="server_registerMachine">
+         <wsdl:input message="tns:server_registerMachineIn"/>
+         <wsdl:output message="tns:server_registerMachineOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="server_restartGuiService">
+         <wsdl:input message="tns:server_restartGuiServiceIn"/>
+         <wsdl:output message="tns:server_restartGuiServiceOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="setAutoUpdateIpFlag">
+         <wsdl:input message="tns:setAutoUpdateIpFlagIn"/>
+         <wsdl:output message="tns:setAutoUpdateIpFlagOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="setInstanceGroup">
+         <wsdl:input message="tns:setInstanceGroupIn"/>
+         <wsdl:output message="tns:setInstanceGroupOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="setInstancePollInterval">
+         <wsdl:input message="tns:setInstancePollIntervalIn"/>
+         <wsdl:output message="tns:setInstancePollIntervalOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="setKeySecureCACert">
+         <wsdl:input message="tns:setKeySecureCACertIn"/>
+         <wsdl:output message="tns:setKeySecureCACertOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="setKeySecureCredentials">
+         <wsdl:input message="tns:setKeySecureCredentialsIn"/>
+         <wsdl:output message="tns:setKeySecureCredentialsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="setKeySecureProperties">
+         <wsdl:input message="tns:setKeySecurePropertiesIn"/>
+         <wsdl:output message="tns:setKeySecurePropertiesOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="setMaxOfflinePeriod">
+         <wsdl:input message="tns:setMaxOfflinePeriodIn"/>
+         <wsdl:output message="tns:setMaxOfflinePeriodOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="setNTPInterval">
+         <wsdl:input message="tns:setNTPIntervalIn"/>
+         <wsdl:output message="tns:setNTPIntervalOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="setNTPServers">
+         <wsdl:input message="tns:setNTPServersIn"/>
+         <wsdl:output message="tns:setNTPServersOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="setProxyConfig">
+         <wsdl:input message="tns:setProxyConfigIn"/>
+         <wsdl:output message="tns:setProxyConfigOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="setSafeNetStartGuardConfig">
+         <wsdl:input message="tns:setSafeNetStartGuardConfigIn"/>
+         <wsdl:output message="tns:setSafeNetStartGuardConfigOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="shutdownSystem">
+         <wsdl:input message="tns:shutdownSystemIn"/>
+         <wsdl:output message="tns:shutdownSystemOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="startInstance">
+         <wsdl:input message="tns:startInstanceIn"/>
+         <wsdl:output message="tns:startInstanceOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="submitLogMessage">
+         <wsdl:input message="tns:submitLogMessageIn"/>
+         <wsdl:output message="tns:submitLogMessageOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="suspendUnattendedReboot">
+         <wsdl:input message="tns:suspendUnattendedRebootIn"/>
+         <wsdl:output message="tns:suspendUnattendedRebootOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="unregisterAllPeers">
+         <wsdl:input message="tns:unregisterAllPeersIn"/>
+         <wsdl:output message="tns:unregisterAllPeersOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="unregisterPeer">
+         <wsdl:input message="tns:unregisterPeerIn"/>
+         <wsdl:output message="tns:unregisterPeerOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="updateAggregateData">
+         <wsdl:input message="tns:updateAggregateDataIn"/>
+         <wsdl:output message="tns:updateAggregateDataOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="updateAggregateRefreshRate">
+         <wsdl:input message="tns:updateAggregateRefreshRateIn"/>
+         <wsdl:output message="tns:updateAggregateRefreshRateOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="updateCloudCredentials">
+         <wsdl:input message="tns:updateCloudCredentialsIn"/>
+         <wsdl:output message="tns:updateCloudCredentialsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="updateGroupDescription">
+         <wsdl:input message="tns:updateGroupDescriptionIn"/>
+         <wsdl:output message="tns:updateGroupDescriptionOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="updateNetworkInterface">
+         <wsdl:input message="tns:updateNetworkInterfaceIn"/>
+         <wsdl:output message="tns:updateNetworkInterfaceOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="updateRoleDescription">
+         <wsdl:input message="tns:updateRoleDescriptionIn"/>
+         <wsdl:output message="tns:updateRoleDescriptionOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="updateRolePermissions">
+         <wsdl:input message="tns:updateRolePermissionsIn"/>
+         <wsdl:output message="tns:updateRolePermissionsOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="updateSNMPTrapConfig">
+         <wsdl:input message="tns:updateSNMPTrapConfigIn"/>
+         <wsdl:output message="tns:updateSNMPTrapConfigOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="updateSyslogServer">
+         <wsdl:input message="tns:updateSyslogServerIn"/>
+         <wsdl:output message="tns:updateSyslogServerOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="updateUserScope">
+         <wsdl:input message="tns:updateUserScopeIn"/>
+         <wsdl:output message="tns:updateUserScopeOut"/>
+      </wsdl:operation>
+      <wsdl:operation name="uploadSignedSSLCertificate">
+         <wsdl:input message="tns:uploadSignedSSLCertificateIn"/>
+         <wsdl:output message="tns:uploadSignedSSLCertificateOut"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="pvmSOAPBinding" type="tns:pvmSOAPPortType">
+      <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="addDNS">
+         <soap:operation soapAction="urn:addDNSAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="addInstanceGroup">
+         <soap:operation soapAction="urn:addInstanceGroupAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="addNetworkInterface">
+         <soap:operation soapAction="urn:addNetworkInterfaceAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="addNetworkRoute">
+         <soap:operation soapAction="urn:addNetworkRouteAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="addRole">
+         <soap:operation soapAction="urn:addRoleAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="addUser">
+         <soap:operation soapAction="urn:addUserAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="applyNetworkChanges">
+         <soap:operation soapAction="urn:applyNetworkChangesAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="backupNetworkConfiguration">
+         <soap:operation soapAction="urn:backupNetworkConfigurationAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="bootupProtectedInstanceExAsync">
+         <soap:operation soapAction="urn:bootupProtectedInstanceExAsyncAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="bootupProtectedInstanceEx">
+         <soap:operation soapAction="urn:bootupProtectedInstanceExAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="bootupProtectedInstanceAsync">
+         <soap:operation soapAction="urn:bootupProtectedInstanceAsyncAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="bootupProtectedInstance">
+         <soap:operation soapAction="urn:bootupProtectedInstanceAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="cancelClearLogJob">
+         <soap:operation soapAction="urn:cancelClearLogJobAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="cancelNetworkChanges">
+         <soap:operation soapAction="urn:cancelNetworkChangesAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="changePasswordForUser">
+         <soap:operation soapAction="urn:changePasswordForUserAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="changePassword">
+         <soap:operation soapAction="urn:changePasswordAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="checkKeySecure">
+         <soap:operation soapAction="urn:checkKeySecureAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="configureHaService">
+         <soap:operation soapAction="urn:configureHaServiceAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="configureHeartBeat">
+         <soap:operation soapAction="urn:configureHeartBeatAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="debugLogTransfer">
+         <soap:operation soapAction="urn:debugLogTransferAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="deleteDNS">
+         <soap:operation soapAction="urn:deleteDNSAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="deleteInstanceGroup">
+         <soap:operation soapAction="urn:deleteInstanceGroupAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="deleteNetworkInterface">
+         <soap:operation soapAction="urn:deleteNetworkInterfaceAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="deleteNetworkRoute">
+         <soap:operation soapAction="urn:deleteNetworkRouteAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="deleteProxyConfig">
+         <soap:operation soapAction="urn:deleteProxyConfigAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="deleteRole">
+         <soap:operation soapAction="urn:deleteRoleAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="deleteSSLCertificate">
+         <soap:operation soapAction="urn:deleteSSLCertificateAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="deleteUser">
+         <soap:operation soapAction="urn:deleteUserAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="deregisterPhysicalServer">
+         <soap:operation soapAction="urn:deregisterPhysicalServerAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="disableNTP">
+         <soap:operation soapAction="urn:disableNTPAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="disablePhysicalServerSupport">
+         <soap:operation soapAction="urn:disablePhysicalServerSupportAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="disableSNMPTraps">
+         <soap:operation soapAction="urn:disableSNMPTrapsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="disableSyslogForwarding">
+         <soap:operation soapAction="urn:disableSyslogForwardingAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="disableUnattendedRebootAll">
+         <soap:operation soapAction="urn:disableUnattendedRebootAllAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="disableUnattendedRebootGroup">
+         <soap:operation soapAction="urn:disableUnattendedRebootGroupAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="disableUnattendedReboot">
+         <soap:operation soapAction="urn:disableUnattendedRebootAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="enableNTP">
+         <soap:operation soapAction="urn:enableNTPAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="enablePartition">
+         <soap:operation soapAction="urn:enablePartitionAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="enablePhysicalServerSupport">
+         <soap:operation soapAction="urn:enablePhysicalServerSupportAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="enableSNMPTraps">
+         <soap:operation soapAction="urn:enableSNMPTrapsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="enableSafeNetStartGuard">
+         <soap:operation soapAction="urn:enableSafeNetStartGuardAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="enableSyslogForwarding">
+         <soap:operation soapAction="urn:enableSyslogForwardingAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="enableUnattendedRebootAll">
+         <soap:operation soapAction="urn:enableUnattendedRebootAllAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="enableUnattendedRebootGroup">
+         <soap:operation soapAction="urn:enableUnattendedRebootGroupAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="enableUnattendedReboot">
+         <soap:operation soapAction="urn:enableUnattendedRebootAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="eulaAccept">
+         <soap:operation soapAction="urn:eulaAcceptAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="eulaText">
+         <soap:operation soapAction="urn:eulaTextAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="exportProvisioningData">
+         <soap:operation soapAction="urn:exportProvisioningDataAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="exportSettings">
+         <soap:operation soapAction="urn:exportSettingsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="generateSSLCSR">
+         <soap:operation soapAction="urn:generateSSLCSRAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getAggregateRefreshRate">
+         <soap:operation soapAction="urn:getAggregateRefreshRateAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getAutoUpdateIpFlag">
+         <soap:operation soapAction="urn:getAutoUpdateIpFlagAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getChallengeResponseKeyName">
+         <soap:operation soapAction="urn:getChallengeResponseKeyNameAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getClientEnvironment">
+         <soap:operation soapAction="urn:getClientEnvironmentAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getClientInfo">
+         <soap:operation soapAction="urn:getClientInfoAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getCloudParams">
+         <soap:operation soapAction="urn:getCloudParamsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getComplianceReport">
+         <soap:operation soapAction="urn:getComplianceReportAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getCurrentPermissions">
+         <soap:operation soapAction="urn:getCurrentPermissionsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getDescriptionForGroup">
+         <soap:operation soapAction="urn:getDescriptionForGroupAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getDescriptionForRole">
+         <soap:operation soapAction="urn:getDescriptionForRoleAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getFirstRunNextStep">
+         <soap:operation soapAction="urn:getFirstRunNextStepAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getGroupStatus">
+         <soap:operation soapAction="urn:getGroupStatusAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getGroupsforInstance">
+         <soap:operation soapAction="urn:getGroupsforInstanceAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getHaConfig">
+         <soap:operation soapAction="urn:getHaConfigAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getHaHeartBeatConfig">
+         <soap:operation soapAction="urn:getHaHeartBeatConfigAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getHaStatus">
+         <soap:operation soapAction="urn:getHaStatusAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getInstanceGroup">
+         <soap:operation soapAction="urn:getInstanceGroupAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getInstancePollInterval">
+         <soap:operation soapAction="urn:getInstancePollIntervalAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getInstanceStatus">
+         <soap:operation soapAction="urn:getInstanceStatusAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getJobDetails">
+         <soap:operation soapAction="urn:getJobDetailsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getKeySecureCredentials">
+         <soap:operation soapAction="urn:getKeySecureCredentialsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getKeySecureProperties">
+         <soap:operation soapAction="urn:getKeySecurePropertiesAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getMaxOfflinePeriod">
+         <soap:operation soapAction="urn:getMaxOfflinePeriodAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getNTPInterval">
+         <soap:operation soapAction="urn:getNTPIntervalAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getNTPServers">
+         <soap:operation soapAction="urn:getNTPServersAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getNTPState">
+         <soap:operation soapAction="urn:getNTPStateAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getNetworkInterfaceInfo">
+         <soap:operation soapAction="urn:getNetworkInterfaceInfoAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getPVMConfigNextCli">
+         <soap:operation soapAction="urn:getPVMConfigNextCliAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getPVMConfigNextStep">
+         <soap:operation soapAction="urn:getPVMConfigNextStepAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getPartitionKeyName">
+         <soap:operation soapAction="urn:getPartitionKeyNameAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getPartitionStatus">
+         <soap:operation soapAction="urn:getPartitionStatusAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getPartitions">
+         <soap:operation soapAction="urn:getPartitionsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getPermissionsForRole">
+         <soap:operation soapAction="urn:getPermissionsForRoleAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getPhysicalMachineInfo">
+         <soap:operation soapAction="urn:getPhysicalMachineInfoAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getPhysicalServerResponse">
+         <soap:operation soapAction="urn:getPhysicalServerResponseAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getPhysicalServerStatus">
+         <soap:operation soapAction="urn:getPhysicalServerStatusAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getPowerStatusOverview">
+         <soap:operation soapAction="urn:getPowerStatusOverviewAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getProxyConfig">
+         <soap:operation soapAction="urn:getProxyConfigAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getSNMPTrapConfig">
+         <soap:operation soapAction="urn:getSNMPTrapConfigAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getSafeNetStartGuardConfig">
+         <soap:operation soapAction="urn:getSafeNetStartGuardConfigAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getStatusOverview">
+         <soap:operation soapAction="urn:getStatusOverviewAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getSysLogServerInfo">
+         <soap:operation soapAction="urn:getSysLogServerInfoAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getSystemStatusOverview">
+         <soap:operation soapAction="urn:getSystemStatusOverviewAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getUserRole">
+         <soap:operation soapAction="urn:getUserRoleAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getUserScope">
+         <soap:operation soapAction="urn:getUserScopeAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="getVersion">
+         <soap:operation soapAction="urn:getVersionAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="importSettings">
+         <soap:operation soapAction="urn:importSettingsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="isEulaDone">
+         <soap:operation soapAction="urn:isEulaDoneAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listApi">
+         <soap:operation soapAction="urn:listApiAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listClearLogJobs">
+         <soap:operation soapAction="urn:listClearLogJobsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listCloudCredentials">
+         <soap:operation soapAction="urn:listCloudCredentialsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listDNS">
+         <soap:operation soapAction="urn:listDNSAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listInstanceGroups">
+         <soap:operation soapAction="urn:listInstanceGroupsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listInstancesJobID">
+         <soap:operation soapAction="urn:listInstancesJobIDAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listInstancesWithPartitionsSharingKeys">
+         <soap:operation soapAction="urn:listInstancesWithPartitionsSharingKeysAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listInstances">
+         <soap:operation soapAction="urn:listInstancesAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listNetworkInterfaces">
+         <soap:operation soapAction="urn:listNetworkInterfacesAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listNetworkRoutes">
+         <soap:operation soapAction="urn:listNetworkRoutesAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listProtectedInstances">
+         <soap:operation soapAction="urn:listProtectedInstancesAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listRegions">
+         <soap:operation soapAction="urn:listRegionsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listRolesEx">
+         <soap:operation soapAction="urn:listRolesExAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listRoles">
+         <soap:operation soapAction="urn:listRolesAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listSupportedClouds">
+         <soap:operation soapAction="urn:listSupportedCloudsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listUsersEx">
+         <soap:operation soapAction="urn:listUsersExAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="listUsers">
+         <soap:operation soapAction="urn:listUsersAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="meteringGetManagedClientInfo">
+         <soap:operation soapAction="urn:meteringGetManagedClientInfoAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="pvm_getAddress">
+         <soap:operation soapAction="urn:pvm_getAddressAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="pvm_getCACert">
+         <soap:operation soapAction="urn:pvm_getCACertAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="pvm_setAddress">
+         <soap:operation soapAction="urn:pvm_setAddressAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="pvm_setCACert">
+         <soap:operation soapAction="urn:pvm_setCACertAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="reassignPartitionToInstance">
+         <soap:operation soapAction="urn:reassignPartitionToInstanceAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="reassignRole">
+         <soap:operation soapAction="urn:reassignRoleAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="rebootSystem">
+         <soap:operation soapAction="urn:rebootSystemAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="registerInstanceIp">
+         <soap:operation soapAction="urn:registerInstanceIpAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="registerPeer">
+         <soap:operation soapAction="urn:registerPeerAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="registerPhysicalMachine">
+         <soap:operation soapAction="urn:registerPhysicalMachineAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="resumeUnattendedReboot">
+         <soap:operation soapAction="urn:resumeUnattendedRebootAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="revertNetworkConfiguration">
+         <soap:operation soapAction="urn:revertNetworkConfigurationAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="runNetstat">
+         <soap:operation soapAction="urn:runNetstatAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="runPing">
+         <soap:operation soapAction="urn:runPingAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="runTcpcheck">
+         <soap:operation soapAction="urn:runTcpcheckAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="runTraceroute">
+         <soap:operation soapAction="urn:runTracerouteAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="safeLogTransfer">
+         <soap:operation soapAction="urn:safeLogTransferAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="saveSSLCertificate">
+         <soap:operation soapAction="urn:saveSSLCertificateAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="scheduleClearLogJob">
+         <soap:operation soapAction="urn:scheduleClearLogJobAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="server_getManagedStatus">
+         <soap:operation soapAction="urn:server_getManagedStatusAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="server_registerMachine">
+         <soap:operation soapAction="urn:server_registerMachineAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="server_restartGuiService">
+         <soap:operation soapAction="urn:server_restartGuiServiceAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="setAutoUpdateIpFlag">
+         <soap:operation soapAction="urn:setAutoUpdateIpFlagAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="setInstanceGroup">
+         <soap:operation soapAction="urn:setInstanceGroupAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="setInstancePollInterval">
+         <soap:operation soapAction="urn:setInstancePollIntervalAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="setKeySecureCACert">
+         <soap:operation soapAction="urn:setKeySecureCACertAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="setKeySecureCredentials">
+         <soap:operation soapAction="urn:setKeySecureCredentialsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="setKeySecureProperties">
+         <soap:operation soapAction="urn:setKeySecurePropertiesAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="setMaxOfflinePeriod">
+         <soap:operation soapAction="urn:setMaxOfflinePeriodAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="setNTPInterval">
+         <soap:operation soapAction="urn:setNTPIntervalAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="setNTPServers">
+         <soap:operation soapAction="urn:setNTPServersAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="setProxyConfig">
+         <soap:operation soapAction="urn:setProxyConfigAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="setSafeNetStartGuardConfig">
+         <soap:operation soapAction="urn:setSafeNetStartGuardConfigAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="shutdownSystem">
+         <soap:operation soapAction="urn:shutdownSystemAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="startInstance">
+         <soap:operation soapAction="urn:startInstanceAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="submitLogMessage">
+         <soap:operation soapAction="urn:submitLogMessageAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="suspendUnattendedReboot">
+         <soap:operation soapAction="urn:suspendUnattendedRebootAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="unregisterAllPeers">
+         <soap:operation soapAction="urn:unregisterAllPeersAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="unregisterPeer">
+         <soap:operation soapAction="urn:unregisterPeerAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="updateAggregateData">
+         <soap:operation soapAction="urn:updateAggregateDataAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="updateAggregateRefreshRate">
+         <soap:operation soapAction="urn:updateAggregateRefreshRateAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="updateCloudCredentials">
+         <soap:operation soapAction="urn:updateCloudCredentialsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="updateGroupDescription">
+         <soap:operation soapAction="urn:updateGroupDescriptionAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="updateNetworkInterface">
+         <soap:operation soapAction="urn:updateNetworkInterfaceAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="updateRoleDescription">
+         <soap:operation soapAction="urn:updateRoleDescriptionAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="updateRolePermissions">
+         <soap:operation soapAction="urn:updateRolePermissionsAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="updateSNMPTrapConfig">
+         <soap:operation soapAction="urn:updateSNMPTrapConfigAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="updateSyslogServer">
+         <soap:operation soapAction="urn:updateSyslogServerAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="updateUserScope">
+         <soap:operation soapAction="urn:updateUserScopeAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="uploadSignedSSLCertificate">
+         <soap:operation soapAction="urn:uploadSignedSSLCertificateAction" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+         <wsdl:input>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:pvmapi" use="encoded"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="pvmService">
+      <wsdl:port binding="tns:pvmSOAPBinding" name="pvmSOAPPort">
+         <soap:address location="https://192.168.92.146:8080/soap"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>

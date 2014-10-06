@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="/static/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/jquerysoap/jquery.soap.js"></script>
+    <script type="text/javascript" src="/static/jquerysoap/jquery.xml2json.js"></script>
+    <script type="text/javascript" src="/static/knockout/ko.min.js"></script>
+    <script type="text/javascript" src="/static/pvminterface.js"></script>
+    <script type="text/javascript" src="/static/pvmajax.js"></script>
+    <script type="text/javascript" src="/static/soapMethods.js"></script>
+    <script type="text/javascript" src="/static/ready.js"></script>
+</head>
+<body>
+    <div data-bind="foreach: methods">
+        <p data-bind="text: name"></p>
+        <p data-bind="text: description"></p>
+        <ul data-bind="foreach: params">
+            <li data-bind="text: name + '/' + type"></li>
+        </ul>
+        <button data-bind="click: call, text: 'call ' + name"></button>
+        <p data-bind="text: result"></p>
+    </div>
+</body>
+</html>

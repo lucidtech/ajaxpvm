@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/static/pvmajax.js" />
+        <item url="file://$PROJECT_DIR$/static/soapMethods.js" />
+        <item url="file://$PROJECT_DIR$/static/pvminterface.js" />
+        <item url="file://$PROJECT_DIR$/static/ready.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/static/pvmajax.js" />
+      <root url="file://$PROJECT_DIR$/static/soapMethods.js" />
+      <root url="file://$PROJECT_DIR$/static/pvminterface.js" />
+      <root url="file://$PROJECT_DIR$/static/ready.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
