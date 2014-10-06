@@ -9,8 +9,8 @@
       this.successFunction = __bind(this.successFunction, this);
       var name, type, _i, _len, _ref, _ref1;
 
-      this.name = soapMethod.method;
-      this.params = new Array;
+      this.name = ko.observable(soapMethod.method);
+      this.params = ko.observableArray();
       _ref = soapMethod.takes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         _ref1 = _ref[_i], name = _ref1.name, type = _ref1.type;
@@ -19,7 +19,7 @@
           type: type
         });
       }
-      this.description = '';
+      this.description = ko.observable('');
       this.result = ko.observable();
     }
 

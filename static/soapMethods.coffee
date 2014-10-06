@@ -1,10 +1,10 @@
 class SOAPMethod
 
   constructor : (soapMethod) ->
-    @name   = soapMethod.method
-    @params = new Array
+    @name   = ko.observable soapMethod.method
+    @params = ko.observableArray()
     @params.push name: name, type: type for {name, type} in soapMethod.takes
-    @description = ''
+    @description = ko.observable ''
     @result = ko.observable()
 
   successFunction : (r) =>

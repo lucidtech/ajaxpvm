@@ -19,7 +19,7 @@ def send(obj):
     #     obj["groups"] = obj["groups"]._asdict()
 
     try:
-        retjson = json.dumps(str(obj.data))
+        retjson = json.dumps(SOAPpy.Types.simplify(obj.data))
         return HttpResponse(retjson, content_type='application/json')
 
     except TypeError:

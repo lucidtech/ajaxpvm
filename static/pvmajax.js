@@ -35,6 +35,8 @@
     };
 
     PVMAjax.prototype.initialize = function() {
+      var _this = this;
+
       return $.ajax({
         dataType: 'json',
         url: window.location.protocol + '//' + window.location.host + '/init',
@@ -46,17 +48,22 @@
           route: this.pvmRoute,
           port: this.pvmPort
         },
-        success: this.getMethods()
+        success: function() {
+          _this.getMethods();
+          return _this.loadDescriptions();
+        }
       });
     };
 
     PVMAjax.prototype.bindDescriptions = function() {
-      var m, _results;
+      var m, _i, _len, _ref, _results;
 
-      if (!((this.descriptions != null) || (this.methods() != null))) {
+      if (Object.keys(this.descriptions).length !== 0 && this.methods().length !== 0) {
+        _ref = this.methods();
         _results = [];
-        for (m in this.descriptions) {
-          _results.push(this.methods()[m].description = m);
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          m = _ref[_i];
+          _results.push(m.description(this.descriptions[m.name()]));
         }
         return _results;
       }
@@ -75,14 +82,14 @@
         dataType: 'json',
         url: window.location.protocol + '//' + window.location.host + '/methods',
         success: function(r) {
-          var m, _i, _len, _results;
+          var m, _i, _len;
 
-          _results = [];
           for (_i = 0, _len = r.length; _i < _len; _i++) {
             m = r[_i];
-            _results.push(_this.methods.push(new SOAPMethod(m)));
+            _this.methods.push(new SOAPMethod(m));
           }
-          return _results;
+          _this.bindDescriptions();
+          return success(r);
         },
         error: error
       });
@@ -99,7 +106,8 @@
           params: {}
         },
         success: function(r) {
-          return success(r);
+          _this.descriptions = r[2];
+          return _this.bindDescriptions();
         },
         error: this.error
       });

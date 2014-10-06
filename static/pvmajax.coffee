@@ -31,13 +31,14 @@ class PVMAjax
         host      : @pvmURL
         route     : @pvmRoute
         port      : @pvmPort
-      success   : @getMethods()
-#                  @loadDescriptions()
+      success   : () =>
+                    @getMethods()
+                    @loadDescriptions()
 
 
   bindDescriptions : () ->
-    unless @descriptions? || @methods()?
-      @methods()[m].description = m for m of @descriptions
+    if Object.keys(@descriptions).length != 0 && @methods().length != 0
+      m.description @descriptions[m.name()] for m in @methods()
 
 
   getMethods : (success, error) ->
@@ -50,8 +51,8 @@ class PVMAjax
       url       : window.location.protocol + '//' + window.location.host + '/methods'
       success   : (r) =>
                     @methods.push new SOAPMethod m for m in r
-#                    @bindDescriptions()
-#                    success r
+                    @bindDescriptions()
+                    success r
       error     : error
 
   loadDescriptions : () ->
@@ -62,9 +63,9 @@ class PVMAjax
         method    : 'listApi'
         params    : {}
       success   : (r) =>
-#                    @descriptions = r
-#                    @bindDescriptions()
-                    success r
+                    @descriptions = r[2]
+                    @bindDescriptions()
+#                    success r
       error     : @error
 
 

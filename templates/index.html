@@ -14,13 +14,13 @@
 </head>
 <body>
     <div data-bind="foreach: methods">
-        <p data-bind="text: name"></p>
-        <p data-bind="text: description"></p>
+        <p data-bind="text: name()"></p>
+        <p data-bind="text: description()"></p>
         <ul data-bind="foreach: params">
             <li data-bind="text: name + '/' + type"></li>
         </ul>
-        <button data-bind="click: call, text: 'call ' + name"></button>
-        <p data-bind="text: result"></p>
+        <button data-bind="click: call, text: 'call ' + name()"></button>
+        <p data-bind="text: result()"></p>
     </div>
 </body>
 </html>
