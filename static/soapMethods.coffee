@@ -5,17 +5,73 @@ class SOAPMethod
     @params = ko.observableArray()
     @params.push name: name, type: type for {name, type} in soapMethod.takes
     @description = ko.observable ''
-    @result = ko.observable()
+    @resultValue = ko.observable()
+    @resultState = ko.observable()
+    @resultMessage = ko.observable()
+    @waiting = ko.observable
+    @result = ko.computed =>
+      if @resultState()?
+        if @resultState() == 0
+          @resultValue()
+        else
+          @resultMessage()
+      else
+        null
+
 
   successFunction : (r) =>
     console.log 'success'
-    @result r
+    @resultState r[0]
+    @resultMessage r[1]
+    @resultValue r[2]
 
   errorFunction : (r) =>
     console.log 'error'
     console.log r
 
-  call : (context, event, paramsObject, success, error) ->
+  call : (context, event, paramsArr, success, error) ->
+
+    name = @name()
+
+    # Assign Params
+    #
+    # If called by knockout in view - arguments[0..1] are context & event
+    # If called from console or invoked some other way - need to re-assign arguments
+    #
+
+    # no arguments means paramsArr must be set to empty array
+    if arguments.length == 0
+      paramsArr = []
+
+    # if one argument, it must be paramsArr
+    if arguments.length == 1
+      paramsArr = arguments[0]
+
+    # if 2 arguments, could be from knockout or other... check to see if last argument is function
+    if arguments.length == 2
+      if typeof arguments[1] == "function"
+        paramsArr = arguments[0]
+        success = arguments[1]
+      else
+        # if knockout, then need to set paramsArr to empty array
+        paramsArr = []
+
+    # if 3 arguments and last is function - then was not call by knockout
+    if arguments.length == 3 && typeof arguments[2] == "function"
+      paramsArr = arguments[0]
+      success = arguments[1]
+      error = arguments[2]
+
+    #params must be an array - since server will unpack.  Make sure to pack params as an Array
+    if typeof paramsArr != "object"
+      paramsArr = [paramsArr]
+    else
+      if typeof paramsArr.length == "undefined"
+        paramsArr = [paramsArr]
+
+    params = JSON.stringify paramsArr
+
+    #assign defaults to error and success if undefined
     unless error
       error = @errorFunction
     unless success
@@ -25,8 +81,8 @@ class SOAPMethod
       dataType  : 'json'
       url       : window.location.protocol + '//' + window.location.host + '/pvm'
       data      :
-        method    : @name
-        params    : paramsObject
+        method    : name
+        params    : params
       success   : success
       error     : error
 

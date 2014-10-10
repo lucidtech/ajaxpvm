@@ -12,16 +12,16 @@
       port: "8080"
     };
 
-    function PVMAjax(username, password, pvmProtocol, pvmURL, pvmRoute, pvmPort) {
-      this.username = username;
-      this.password = password;
+    function PVMAjax(pvmProtocol, pvmURL, pvmRoute, pvmPort) {
       this.pvmProtocol = pvmProtocol;
       this.pvmURL = pvmURL;
       this.pvmRoute = pvmRoute;
       this.pvmPort = pvmPort;
-      this.methods = ko.observableArray();
+      this.username = ko.observable('');
+      this.password = ko.observable('');
+      this.methodNames = ko.observableArray();
+      this.methods = new Object();
       this.descriptions = new Object();
-      this.initialize();
     }
 
     PVMAjax.prototype.successFunction = function(r) {
@@ -34,15 +34,15 @@
       return console.log(r);
     };
 
-    PVMAjax.prototype.initialize = function() {
+    PVMAjax.prototype.login = function() {
       var _this = this;
 
       return $.ajax({
         dataType: 'json',
         url: window.location.protocol + '//' + window.location.host + '/init',
         data: {
-          username: this.username,
-          password: this.password,
+          username: this.username(),
+          password: this.password(),
           protocol: this.pvmProtocol,
           host: this.pvmURL,
           route: this.pvmRoute,
@@ -58,12 +58,12 @@
     PVMAjax.prototype.bindDescriptions = function() {
       var m, _i, _len, _ref, _results;
 
-      if (Object.keys(this.descriptions).length !== 0 && this.methods().length !== 0) {
-        _ref = this.methods();
+      if (Object.keys(this.descriptions).length !== 0 && this.methodNames().length !== 0) {
+        _ref = this.methodNames();
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           m = _ref[_i];
-          _results.push(m.description(this.descriptions[m.name()]));
+          _results.push(this.methods[m].description(this.descriptions[m].split('\n')));
         }
         return _results;
       }
@@ -86,8 +86,9 @@
 
           for (_i = 0, _len = r.length; _i < _len; _i++) {
             m = r[_i];
-            _this.methods.push(new SOAPMethod(m));
+            _this.methods[m.method] = new SOAPMethod(m);
           }
+          _this.methodNames(Object.keys(_this.methods));
           _this.bindDescriptions();
           return success(r);
         },

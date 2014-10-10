@@ -21,6 +21,7 @@ def send(obj):
     try:
         retjson = json.dumps(SOAPpy.Types.simplify(obj.data))
         return HttpResponse(retjson, content_type='application/json')
+        # return HttpResponse(obj, content_type='application/json')
 
     except TypeError:
         return send(GENERAL_ERROR)
@@ -40,6 +41,7 @@ def init(request):
     if sorted(request.GET.keys()) == sorted(required):
         k = request.GET
         url = k['protocol'] + "://" + k['username'] + ":" + k['password'] + "@" + k['host'] + ":" + k['port'] + '/' + k['route']
+        # pvms = SOAPpy.SOAPProxy(url, simplify_objects=True)
         pvms = SOAPpy.SOAPProxy(url)
         # make a test call to see if we are authenticated
         try:
@@ -66,15 +68,17 @@ def methods(request):
 
 # @notauthenticated
 def pvm(request):
-    response = {}
+
+    def unpackParams(*p):
+        return p
+
     if 'params' in request.GET:
-        params = request.GET['params']
+        params = json.loads(request.GET['params'])
     else:
-        params = ()
+        params = []
 
     try:
-        # response["status"], response["message"], response["groups"] = pvms.invoke(request.GET['method'], params)
-        response = pvms.invoke(request.GET['method'], params)
+        response = pvms.invoke(request.GET['method'], unpackParams(*params))
 
     except SOAPpy.Errors.HTTPError:
         return send(GENERAL_ERROR)

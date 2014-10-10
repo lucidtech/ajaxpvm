@@ -7,7 +7,8 @@
     function SOAPMethod(soapMethod) {
       this.errorFunction = __bind(this.errorFunction, this);
       this.successFunction = __bind(this.successFunction, this);
-      var name, type, _i, _len, _ref, _ref1;
+      var name, type, _i, _len, _ref, _ref1,
+        _this = this;
 
       this.name = ko.observable(soapMethod.method);
       this.params = ko.observableArray();
@@ -20,12 +21,28 @@
         });
       }
       this.description = ko.observable('');
-      this.result = ko.observable();
+      this.resultValue = ko.observable();
+      this.resultState = ko.observable();
+      this.resultMessage = ko.observable();
+      this.waiting = ko.observable;
+      this.result = ko.computed(function() {
+        if (_this.resultState() != null) {
+          if (_this.resultState() === 0) {
+            return _this.resultValue();
+          } else {
+            return _this.resultMessage();
+          }
+        } else {
+          return null;
+        }
+      });
     }
 
     SOAPMethod.prototype.successFunction = function(r) {
       console.log('success');
-      return this.result(r);
+      this.resultState(r[0]);
+      this.resultMessage(r[1]);
+      return this.resultValue(r[2]);
     };
 
     SOAPMethod.prototype.errorFunction = function(r) {
@@ -33,7 +50,37 @@
       return console.log(r);
     };
 
-    SOAPMethod.prototype.call = function(context, event, paramsObject, success, error) {
+    SOAPMethod.prototype.call = function(context, event, paramsArr, success, error) {
+      var name, params;
+
+      name = this.name();
+      if (arguments.length === 0) {
+        paramsArr = [];
+      }
+      if (arguments.length === 1) {
+        paramsArr = arguments[0];
+      }
+      if (arguments.length === 2) {
+        if (typeof arguments[1] === "function") {
+          paramsArr = arguments[0];
+          success = arguments[1];
+        } else {
+          paramsArr = [];
+        }
+      }
+      if (arguments.length === 3 && typeof arguments[2] === "function") {
+        paramsArr = arguments[0];
+        success = arguments[1];
+        error = arguments[2];
+      }
+      if (typeof paramsArr !== "object") {
+        paramsArr = [paramsArr];
+      } else {
+        if (typeof paramsArr.length === "undefined") {
+          paramsArr = [paramsArr];
+        }
+      }
+      params = JSON.stringify(paramsArr);
       if (!error) {
         error = this.errorFunction;
       }
@@ -44,8 +91,8 @@
         dataType: 'json',
         url: window.location.protocol + '//' + window.location.host + '/pvm',
         data: {
-          method: this.name,
-          params: paramsObject
+          method: name,
+          params: params
         },
         success: success,
         error: error

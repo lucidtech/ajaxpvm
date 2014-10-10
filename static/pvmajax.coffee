@@ -6,10 +6,12 @@ class PVMAjax
     route     : "pvm"
     port      : "8080"
 
-  constructor : (@username, @password, @pvmProtocol, @pvmURL, @pvmRoute, @pvmPort) ->
-    @methods = ko.observableArray()
+  constructor : (@pvmProtocol, @pvmURL, @pvmRoute, @pvmPort) ->
+    @username = ko.observable('')
+    @password = ko.observable('')
+    @methodNames = ko.observableArray()
+    @methods  = new Object()
     @descriptions = new Object()
-    @initialize()
 
   successFunction : (r) ->
     console.log 'success'
@@ -20,13 +22,13 @@ class PVMAjax
     console.log r
 
 
-  initialize : () ->
+  login : () ->
     $.ajax
       dataType  : 'json'
       url       : window.location.protocol + '//' + window.location.host + '/init'
       data      :
-        username  : @username
-        password  : @password
+        username  : @username()
+        password  : @password()
         protocol  : @pvmProtocol
         host      : @pvmURL
         route     : @pvmRoute
@@ -37,8 +39,8 @@ class PVMAjax
 
 
   bindDescriptions : () ->
-    if Object.keys(@descriptions).length != 0 && @methods().length != 0
-      m.description @descriptions[m.name()] for m in @methods()
+    if Object.keys(@descriptions).length != 0 && @methodNames().length != 0
+      @methods[m].description @descriptions[m].split('\n') for m in @methodNames()
 
 
   getMethods : (success, error) ->
@@ -50,7 +52,8 @@ class PVMAjax
       dataType  : 'json'
       url       : window.location.protocol + '//' + window.location.host + '/methods'
       success   : (r) =>
-                    @methods.push new SOAPMethod m for m in r
+                    @methods[m.method] = new SOAPMethod m for m in r
+                    @methodNames Object.keys(@methods)
                     @bindDescriptions()
                     success r
       error     : error

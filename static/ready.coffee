@@ -28,7 +28,7 @@
 #
 ## $.ajax({dataType: 'json', url: 'https://192.168.92.146/modern_pvm', data: 'getVersion', success: successFunction})
 
-window.pvm = new PVMAjax 'admin', 'admin1', 'https', '192.168.92.146', 'soap', '8080'
+window.pvm = new PVMAjax 'https', '192.168.92.146', 'soap', '8080'
 
 $ ->
   $('body').each ->

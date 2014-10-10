@@ -13,14 +13,23 @@
     <script type="text/javascript" src="/static/ready.js"></script>
 </head>
 <body>
-    <div data-bind="foreach: methods">
+    <input type="text" data-bind="value: username">
+    <input type="password" data-bind="value: password">
+    <button data-bind="click: login">Login</button>
+    <div data-bind="foreach: methodNames">
+        <!-- ko with: $parent.methods[$data] -->
         <p data-bind="text: name()"></p>
-        <p data-bind="text: description()"></p>
+        <div data-bind="foreach: description">
+            <code>
+                <p data-bind="text: $data"></p>
+            </code>
+        </div>
         <ul data-bind="foreach: params">
             <li data-bind="text: name + '/' + type"></li>
         </ul>
         <button data-bind="click: call, text: 'call ' + name()"></button>
         <p data-bind="text: result()"></p>
+        <!-- /ko -->
     </div>
 </body>
 </html>
