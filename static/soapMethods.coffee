@@ -22,6 +22,9 @@ class SOAPMethod
         null
 
 
+  pvmError : (r) =>
+    alert r[1]
+
   successFunction : (r) =>
     console.log 'success'
     @resultState r[0]
@@ -84,13 +87,19 @@ class SOAPMethod
     unless success
       success = @successFunction
 
+    pvmError = @pvmError
+
     $.ajax
       dataType  : 'json'
       url       : @host.protocol + '//' + @host.host + '/pvm'
       data      :
         method    : name
         params    : params
-      success   : success
+      success   : (r) ->
+        if r[0] == 0
+          success r[2]
+        else
+          pvmError r
       error     : error
 
 window.SOAPMethod = SOAPMethod

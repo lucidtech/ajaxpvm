@@ -6,7 +6,6 @@
     viewModel: PVMMethods = (function() {
       function PVMMethods() {
         this.list = ko.observableArray();
-        this.descriptions = new Object();
         this.loadDescriptions();
       }
 
@@ -15,8 +14,18 @@
           _this = this;
 
         success = function(r) {
-          _this.list(Object.keys(r[2]));
-          return _this.descriptions = r[2];
+          var arr, name, _i, _len, _results;
+
+          arr = Object.keys(r);
+          _results = [];
+          for (_i = 0, _len = arr.length; _i < _len; _i++) {
+            name = arr[_i];
+            _results.push(_this.list.push({
+              name: name,
+              description: r[2][name]
+            }));
+          }
+          return _results;
         };
         return pvm.methods.listApi.call(success);
       };

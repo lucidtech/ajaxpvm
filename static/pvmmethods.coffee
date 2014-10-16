@@ -7,14 +7,13 @@ ko.components.register 'methods',
 
       constructor : () ->
         @list = ko.observableArray()
-        @descriptions = new Object()
         @loadDescriptions()
 
       loadDescriptions : () ->
         success = (r) =>
-          @list Object.keys r[2]
-          @descriptions = r[2]
-        pvm.methods.listApi.call(success)
+          arr = Object.keys r
+          @list.push name: name, description : r[2][name] for name in arr
+        pvm.methods.listApi.call success
 
   template:
       require : "/static/requirejs/text.js!views?template=methods"

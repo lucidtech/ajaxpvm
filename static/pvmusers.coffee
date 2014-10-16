@@ -5,45 +5,90 @@ ko.components.register 'users',
     class PVMUsers
 
       constructor: () ->
-        @names = ko.observableArray()
-        @roles = ko.observableArray()
-        @groups = ko.observableArray()
-        @allRoles = ko.observableArray()
+        @users = ko.observableArray([])
+        @allRoles = ko.observableArray([])
+        @allGroups = ko.observableArray([])
         @init()
 
-      getRoleFor : (name) ->
-        pvm.methods.getUserRole.call name, (r) =>
-          @roles.push name : name, role : r[2]
-
-      getGroupsFor : (name) ->
-        pvm.methods.getUserScope.call name, (r) =>
-          tempArray = new Array()
-          add = (item) ->
-            if item.groups.length > 0
-              tempArray.push item
-          add role: ro, groups: r[2][ro] for ro of r[2]
-          @groups.push name : name, scope : tempArray
-
       getAllRoles : () ->
+        @allRoles []
         pvm.methods.listRoles.call (r) =>
-          @allRoles r[2]
-
+          @allRoles r
+#
+      getAllGroups : () ->
+        pvm.methods.listInstanceGroups.call (r) =>
+          arr = Object.keys r
+          @allGroups []
+          @allGroups.push name: name, details: r[name] for name in arr
+#
       init : =>
-        refreshView = (data) =>
-          if data[0] == 0
-            @names data[2]
-            for name in @names()
-              @getGroupsFor(name)
-              @getRoleFor(name)
-              @getAllRoles()
+        refreshUsers = (r) =>
+          @users r
 
-        pvm.methods.listUsers.call refreshView
+        pvm.methods.listUsers.call refreshUsers
+        @getAllGroups()
+        @getAllRoles()
 
-      deleteUser : (object) =>
-        pvm.methods.deleteUser.call object.name, @init
+      deleteUser : (name) =>
+        pvm.methods.deleteUser.call name, @init
 
       addUser : (form)->
-        pvm.methods.addUser.call [form.username.value, form.password.value, form.role.value]
+        pvm.methods.addUser.call [form.username.value, form.password.value, form.role.value], @init
 
   template:
     require : "/static/requirejs/text.js!views?template=users"
+
+
+ko.components.register 'user',
+
+  viewModel:
+
+    class User
+
+      constructor : (params) ->
+        @name = ko.observable(params.name)
+        @scope = ko.observable(new Object())
+        @role = ko.observable()
+        @allGroups = params.allGroups
+        @assignedGroups = ko.computed =>
+          arr = new Array()
+          arr.push group for group in @scope()[role] for role in Object.keys @scope()
+          arr
+        @unassignedGroups = ko.computed =>
+          arr = new Array()
+          arr.push item.name for item in @allGroups()
+          arr.filter (i)=>@assignedGroups().indexOf(i) < 0
+        @scopeView = ko.computed =>
+          arr = new Array()
+          roles = Object.keys @scope()
+          arr.push role: role, groups: @scope()[role] for role in roles
+          arr
+
+        @init()
+
+      getUserScope : =>
+        pvm.methods.getUserScope.call @name(), (r) =>
+          @scope r
+
+      getUserRole : =>
+        pvm.methods.getUserRole.call @name(), (r) =>
+          @role r
+
+      init : =>
+        @getUserScope()
+        @getUserRole()
+
+      addToScope: (parentObj, thisGroup) =>
+        @scope()[parentObj.role].push thisGroup
+        pvm.methods.updateUserScope.call [@name(), @scope()], @getUserScope
+
+      removeFromScope: (thisRole, thisGroup) =>
+        index = @scope()[thisRole].indexOf thisGroup
+        if index > -1
+          @scope()[thisRole].splice index, 1
+        pvm.methods.updateUserScope.call [@name(), @scope()], @getUserScope
+
+#pvm.methods.updateUserScope.call(['admin', {'admin':['all-machines','HelloDolly']}])
+
+  template:
+    require : "/static/requirejs/text.js!views?template=user"

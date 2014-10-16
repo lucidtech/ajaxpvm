@@ -1,26 +1,15 @@
 <h1>Users</h1>
-{#<div data-bind="foreach: names">#}
-{#    <h2 data-bind="text: name"></h2>#}
-{#</div>#}
-<div data-bind="foreach: roles">
-    <h2 data-bind="text: name + ' is an ' + role"></h2>
-    <button data-bind="click: $parent.deleteUser">Delete User</button>
-</div>
-<div data-bind="foreach: groups">
-    <h2 data-bind="text: name"></h2>
-    <ul data-bind="foreach: scope">
-        <li data-bind="text: groups.length == 0 ? '' : 'is an ' + role + ' for these groups:'"></li>
-        <ul data-bind="foreach: groups">
-            <li data-bind="text: $data"></li>
-        </ul>
-    </ul>
-</div>
 
-<div>
-    <form data-bind="submit: addUser">
-        <input name="username" type="text">
-        <input name="password" type="password">
-        <select name="role" data-bind="options: allRoles"></select>
-        <button type="submit">Add User</button>
-    </form>
-</div>
+<!-- ko foreach: users -->
+    <user params="name: $data, allGroups: $parent.allGroups"></user>
+    <button data-bind="click: $parent.deleteUser, text: 'Delete ' + name"></button>
+<!-- /ko -->
+
+<form data-bind="submit: addUser">
+    <input name="username" type="text">
+    <input name="password" type="password">
+    <select name="role" data-bind="options: allRoles"></select>
+    <button type="submit">Add User</button>
+</form>
+
+

@@ -7,6 +7,7 @@
     function SOAPMethod(soapMethod) {
       this.errorFunction = __bind(this.errorFunction, this);
       this.successFunction = __bind(this.successFunction, this);
+      this.pvmError = __bind(this.pvmError, this);
       var name, type, _i, _len, _ref, _ref1,
         _this = this;
 
@@ -42,6 +43,10 @@
       });
     }
 
+    SOAPMethod.prototype.pvmError = function(r) {
+      return alert(r[1]);
+    };
+
     SOAPMethod.prototype.successFunction = function(r) {
       console.log('success');
       this.resultState(r[0]);
@@ -55,7 +60,7 @@
     };
 
     SOAPMethod.prototype.call = function(context, event, paramsArr, success, error) {
-      var name, params;
+      var name, params, pvmError;
 
       name = this.name();
       if (arguments.length === 0) {
@@ -96,6 +101,7 @@
       if (!success) {
         success = this.successFunction;
       }
+      pvmError = this.pvmError;
       return $.ajax({
         dataType: 'json',
         url: this.host.protocol + '//' + this.host.host + '/pvm',
@@ -103,7 +109,13 @@
           method: name,
           params: params
         },
-        success: success,
+        success: function(r) {
+          if (r[0] === 0) {
+            return success(r[2]);
+          } else {
+            return pvmError(r);
+          }
+        },
         error: error
       });
     };
