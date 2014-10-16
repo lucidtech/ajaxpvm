@@ -5,10 +5,13 @@ class SOAPMethod
     @params = ko.observableArray()
     @params.push name: name, type: type for {name, type} in soapMethod.takes
     @description = ko.observable ''
+    @host =
+      protocol  : window.location.protocol
+      host      : window.location.host
+      route     : "pvm"
     @resultValue = ko.observable()
     @resultState = ko.observable()
     @resultMessage = ko.observable()
-    @waiting = ko.observable
     @result = ko.computed =>
       if @resultState()?
         if @resultState() == 0
@@ -43,9 +46,13 @@ class SOAPMethod
     if arguments.length == 0
       paramsArr = []
 
-    # if one argument, it must be paramsArr
+    # if one argument, it must be paramsArr or successFunction
     if arguments.length == 1
-      paramsArr = arguments[0]
+      if typeof arguments[0] == "function"
+        success = arguments[0]
+        paramsArr = []
+      else
+        paramsArr = arguments[0]
 
     # if 2 arguments, could be from knockout or other... check to see if last argument is function
     if arguments.length == 2
@@ -79,7 +86,7 @@ class SOAPMethod
 
     $.ajax
       dataType  : 'json'
-      url       : window.location.protocol + '//' + window.location.host + '/pvm'
+      url       : @host.protocol + '//' + @host.host + '/pvm'
       data      :
         method    : name
         params    : params

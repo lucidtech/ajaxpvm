@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "pvmgroups.js",
+  "sourceRoot": "",
+  "sources": [
+    "pvmgroups.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA,KAAA,GAAA;;CAAA,CAAM;CAES,EAAA,CAAA,eAAE;CAAM,EAAN,CAAA,EAAD;CAAd,IAAa;;CAAb;;CAFF;CAAA"
+}

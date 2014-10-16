@@ -21,10 +21,14 @@
         });
       }
       this.description = ko.observable('');
+      this.host = {
+        protocol: window.location.protocol,
+        host: window.location.host,
+        route: "pvm"
+      };
       this.resultValue = ko.observable();
       this.resultState = ko.observable();
       this.resultMessage = ko.observable();
-      this.waiting = ko.observable;
       this.result = ko.computed(function() {
         if (_this.resultState() != null) {
           if (_this.resultState() === 0) {
@@ -58,7 +62,12 @@
         paramsArr = [];
       }
       if (arguments.length === 1) {
-        paramsArr = arguments[0];
+        if (typeof arguments[0] === "function") {
+          success = arguments[0];
+          paramsArr = [];
+        } else {
+          paramsArr = arguments[0];
+        }
       }
       if (arguments.length === 2) {
         if (typeof arguments[1] === "function") {
@@ -89,7 +98,7 @@
       }
       return $.ajax({
         dataType: 'json',
-        url: window.location.protocol + '//' + window.location.host + '/pvm',
+        url: this.host.protocol + '//' + this.host.host + '/pvm',
         data: {
           method: name,
           params: params

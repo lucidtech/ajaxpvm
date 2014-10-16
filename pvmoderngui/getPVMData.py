@@ -1,7 +1,6 @@
 __author__ = 'lucidtech'
 
 import json
-import datetime
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 import SOAPpy
@@ -12,11 +11,10 @@ SUCCESS = dict(status="0", message="Success", groups="Success")
 pvms = None
 
 
+# TODO add timeout for inactivity here/cookies/js... don't know which
+
+
 def send(obj):
-    # if isinstance(obj["groups"], datetime.datetime):
-    #     obj["groups"] = time.maketime(obj["groups"].timetuple())
-    # if isinstance(obj["groups"], SOAPpy.Types.structType):
-    #     obj["groups"] = obj["groups"]._asdict()
 
     try:
         retjson = json.dumps(SOAPpy.Types.simplify(obj.data))
@@ -41,12 +39,10 @@ def init(request):
     if sorted(request.GET.keys()) == sorted(required):
         k = request.GET
         url = k['protocol'] + "://" + k['username'] + ":" + k['password'] + "@" + k['host'] + ":" + k['port'] + '/' + k['route']
-        # pvms = SOAPpy.SOAPProxy(url, simplify_objects=True)
         pvms = SOAPpy.SOAPProxy(url)
         # make a test call to see if we are authenticated
         try:
-            # response["status"], response["message"], response["groups"] = pvms.invoke('listSupportedClouds', ())
-            response = pvms.invoke('listSupportedClouds', ())
+            response = pvms.invoke('getVersion', ())
         except SOAPpy.Errors.HTTPError:
             send(NOT_AUTH_ERROR)
     else:
@@ -88,4 +84,7 @@ def pvm(request):
 
 def index(request):
     return render_to_response('index.html')
+
+def views(request):
+    return render_to_response('views/'+ request.GET['template'] +'.html')
 

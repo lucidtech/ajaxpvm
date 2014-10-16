@@ -1,21 +1,18 @@
 class PVMAjax
 
-  host =
-    protocol  : window.location.protocol
-    host      : window.location.host
-    route     : "pvm"
-    port      : "8080"
-
   constructor : (@pvmProtocol, @pvmURL, @pvmRoute, @pvmPort) ->
     @username = ko.observable('')
     @password = ko.observable('')
-    @methodNames = ko.observableArray()
+    @loginSuccess = ko.observable(false)
     @methods  = new Object()
-    @descriptions = new Object()
+    @host =
+      protocol  : window.location.protocol
+      host      : window.location.host
+      route     : "pvm"
 
-  successFunction : (r) ->
+  successFunction : (r) =>
     console.log 'success'
-    console.log r
+    @loginSuccess true
 
   errorFunction : (r) ->
     console.log 'error'
@@ -25,7 +22,7 @@ class PVMAjax
   login : () ->
     $.ajax
       dataType  : 'json'
-      url       : window.location.protocol + '//' + window.location.host + '/init'
+      url       : @host.protocol + '//' + @host.host + '/init'
       data      :
         username  : @username()
         password  : @password()
@@ -33,43 +30,22 @@ class PVMAjax
         host      : @pvmURL
         route     : @pvmRoute
         port      : @pvmPort
-      success   : () =>
-                    @getMethods()
-                    @loadDescriptions()
+      success   : @getMethods
+      error     : @errorFunction
 
 
-  bindDescriptions : () ->
-    if Object.keys(@descriptions).length != 0 && @methodNames().length != 0
-      @methods[m].description @descriptions[m].split('\n') for m in @methodNames()
-
-
-  getMethods : (success, error) ->
+  getMethods : () =>
     unless error
       error = @errorFunction
     unless success
       success = @successFunction
     $.ajax
       dataType  : 'json'
-      url       : window.location.protocol + '//' + window.location.host + '/methods'
+      url       : @host.protocol + '//' + @host.host + '/methods'
       success   : (r) =>
                     @methods[m.method] = new SOAPMethod m for m in r
-                    @methodNames Object.keys(@methods)
-                    @bindDescriptions()
-                    success r
-      error     : error
-
-  loadDescriptions : () ->
-    $.ajax
-      dataType  : 'json'
-      url       : window.location.protocol + '//' + window.location.host + '/pvm'
-      data      :
-        method    : 'listApi'
-        params    : {}
-      success   : (r) =>
-                    @descriptions = r[2]
-                    @bindDescriptions()
-#                    success r
-      error     : @error
+                    @successFunction r
+      error     : @errorFunction
 
 
 window.PVMAjax = PVMAjax

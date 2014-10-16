@@ -30,9 +30,26 @@
 
 window.pvm = new PVMAjax 'https', '192.168.92.146', 'soap', '8080'
 
-$ ->
-  $('body').each ->
-    ko.applyBindings pvm, @
+#bypass manual login for testing
+pvm.username 'admin'
+pvm.password 'admin1'
+pvm.login()
+
+#ko.components.register 'methods', require: '/static/pvmmethods.js'
+
+waitForLogin =  setInterval ->
+                  if pvm.loginSuccess()
+                    clearInterval waitForLogin
+                    ko.applyBindings()
+#                    ko.components.register 'methods', require: 'static/methods'
+#                    window.methods = new PVMMethods pvm
+#                    window.roles = new PVMRoles pvm
+#                    window.users = new PVMUsers pvm
+                , 500
+#window.users = new PVMUsers
+
+#$ ->
+#  ko.applyBindings()
 
 #testEach = (methods) ->
 #  pvm.call method for method in methods

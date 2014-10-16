@@ -7,6 +7,7 @@ urlpatterns = patterns('pvmoderngui.getPVMData',
     url(r'^init$', 'init', name='init'),
     url(r'^pvm$', 'pvm', name='pvm'),
     url(r'^methods$', 'methods', name='methods'),
+    url(r'^views$', 'views', name='views'),
     url(r'^index$', 'index', name='index'),
     # url(r'^blog/', include('blog.urls')),
 
