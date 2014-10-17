@@ -1,0 +1,33 @@
+<style>
+
+.chart div {
+  font: 10px sans-serif;
+  background-color: lightblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: black;
+}
+
+.chart div:first-of-type {
+  background-color: lightgreen;
+  color: white;
+}
+
+.chart div:last-of-type {
+  background-color: rosybrown;
+  color: darkred;
+}
+
+</style>
+
+<!-- ko foreach: tests -->
+
+<p data-bind="text: call + ':' + numberOfRuns()"></p>
+<div class="chart">
+    <!-- ko foreach: bars -->
+    <div data-bind="style:{width: $data.width+'px'}, text: $data.value"></div>
+    <!-- /ko -->
+</div>
+
+<!-- /ko -->

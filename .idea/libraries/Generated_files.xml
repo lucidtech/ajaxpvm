@@ -3,9 +3,11 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/static/pvmgroups.js" />
+        <item url="file://$PROJECT_DIR$/static/performancetasks.js" />
         <item url="file://$PROJECT_DIR$/static/pvmmethods.js" />
         <item url="file://$PROJECT_DIR$/static/pvmajax.js" />
         <item url="file://$PROJECT_DIR$/static/soapMethods.js" />
+        <item url="file://$PROJECT_DIR$/static/performance.js" />
         <item url="file://$PROJECT_DIR$/static/pvminterface.js" />
         <item url="file://$PROJECT_DIR$/static/pvmroles.js" />
         <item url="file://$PROJECT_DIR$/static/pvmusers.js" />
@@ -14,10 +16,12 @@
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/static/pvmgroups.js" />
+      <root url="file://$PROJECT_DIR$/static/performancetasks.js" />
       <root url="file://$PROJECT_DIR$/static/pvmmethods.js" />
       <root url="file://$PROJECT_DIR$/static/pvmajax.js" />
       <root url="file://$PROJECT_DIR$/static/soapMethods.js" />
       <root url="file://$PROJECT_DIR$/static/pvminterface.js" />
+      <root url="file://$PROJECT_DIR$/static/performance.js" />
       <root url="file://$PROJECT_DIR$/static/pvmroles.js" />
       <root url="file://$PROJECT_DIR$/static/pvmusers.js" />
       <root url="file://$PROJECT_DIR$/spec/javascripts/jsToSoapProxyCommsTest.js" />

@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <title></title>
     <script type="text/javascript" src="/static/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/jquerysoap/jquery.soap.js"></script>
-    <script type="text/javascript" src="/static/jquerysoap/jquery.xml2json.js"></script>
+{#    <script type="text/javascript" src="/static/jquerysoap/jquery.soap.js"></script>#}
+{#    <script type="text/javascript" src="/static/jquerysoap/jquery.xml2json.js"></script>#}
     <script type="text/javascript" src="/static/knockout/ko.min.js"></script>
+    <script type="text/javascript" src="/static/chartjs/chart.min.js"></script>
     <script type="text/javascript" src="/static/requirejs/require.min.js"></script>
 {#    <script type="text/javascript" src="/static/requirejs/text.js"></script>#}
-    <script type="text/javascript" src="/static/pvminterface.js"></script>
+{#    <script type="text/javascript" src="/static/pvminterface.js"></script>#}
     <script type="text/javascript" src="/static/pvmajax.js"></script>
     <script type="text/javascript" src="/static/pvmmethods.js"></script>
-    <script type="text/javascript" src="/static/pvmroles.js"></script>
-    <script type="text/javascript" src="/static/pvmusers.js"></script>
+    <script type="text/javascript" src="/static/performancetasks.js"></script>
+    <script type="text/javascript" src="/static/performance.js"></script>
+{#    <script type="text/javascript" src="/static/pvmroles.js"></script>#}
+{#    <script type="text/javascript" src="/static/pvmusers.js"></script>#}
     <script type="text/javascript" src="/static/soapMethods.js"></script>
     <script type="text/javascript" src="/static/ready.js"></script>
 </head>
@@ -134,7 +137,8 @@
 {##}
 {#    </dl>#}
 
-<users></users>
+<performance params="params: window.testSuite"></performance>
+{#<users></users>#}
 {#<methods></methods>#}
 
 {#    <div data-bind="foreach: methodNames">#}
