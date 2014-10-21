@@ -14,18 +14,18 @@
           _this = this;
 
         success = function(r) {
-          var arr, name, _i, _len, _results;
+          var arr, list, name, _i, _len;
 
           arr = Object.keys(r);
-          _results = [];
+          list = new Array();
           for (_i = 0, _len = arr.length; _i < _len; _i++) {
             name = arr[_i];
-            _results.push(_this.list.push({
+            list.push({
               name: name,
-              description: r[2][name]
-            }));
+              description: r[name]
+            });
           }
-          return _results;
+          return _this.list(list);
         };
         return pvm.methods.listApi.call(success);
       };

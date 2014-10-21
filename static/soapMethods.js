@@ -8,19 +8,22 @@
       this.errorFunction = __bind(this.errorFunction, this);
       this.successFunction = __bind(this.successFunction, this);
       this.pvmError = __bind(this.pvmError, this);
-      var name, type, _i, _len, _ref, _ref1,
+      var name, tempArry, type, _i, _len, _ref, _ref1,
         _this = this;
 
       this.name = ko.observable(soapMethod.method);
       this.params = ko.observableArray();
+      tempArry = new Array();
       _ref = soapMethod.takes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         _ref1 = _ref[_i], name = _ref1.name, type = _ref1.type;
-        this.params.push({
+        tempArry.push({
           name: name,
           type: type
         });
       }
+      tempArry.sort();
+      this.params(tempArry);
       this.description = ko.observable('');
       this.host = {
         protocol: window.location.protocol,
@@ -49,9 +52,7 @@
 
     SOAPMethod.prototype.successFunction = function(r) {
       console.log('success');
-      this.resultState(r[0]);
-      this.resultMessage(r[1]);
-      return this.resultValue(r[2]);
+      return this.resultValue(r);
     };
 
     SOAPMethod.prototype.errorFunction = function(r) {

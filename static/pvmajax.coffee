@@ -33,7 +33,6 @@ class PVMAjax
       success   : @getMethods
       error     : @errorFunction
 
-
   getMethods : () =>
     unless error
       error = @errorFunction

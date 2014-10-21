@@ -18,8 +18,9 @@ ko.components.register 'users',
       getAllGroups : () ->
         pvm.methods.listInstanceGroups.call (r) =>
           arr = Object.keys r
-          @allGroups []
-          @allGroups.push name: name, details: r[name] for name in arr
+          allGroups = new Array()
+          allGroups.push name: name, details: r[name] for name in arr
+          @allGroups allGroups
 #
       init : =>
         refreshUsers = (r) =>
@@ -65,6 +66,56 @@ ko.components.register 'user',
           arr
 
         @init()
+
+#
+#
+#scope -> role : ['gr','gr'], role: [], role: []
+#
+#roles -> [role, role, role]
+#
+#groups -> [group, group, group]
+#
+#memory model
+#
+#role : [group: bool, group: bool, group, bool], role... etc.
+#
+#
+#load
+#	scope -> memory model
+#
+#toggle
+# @role.group(!@role.group())
+#
+#save
+#	memory model -> scope
+#
+#
+#      THIS WILL RETURN THE RIGHT
+#
+#groups = ['one','two','three']
+#roles = ['admin','observer','user']
+#jimmy =
+#    admin : []
+#    observer : ['one']
+#    user : ['two', 'one']
+#
+#jimmyRoleView = (scope, groups, roles) ->
+#    roles.map (r) ->
+#        scopeForThisRole = new Array()
+#        scopeForThisRole = scope[r]
+#        userGroups = new Array()
+#        userGroups = groups
+#        go = userGroups.map (g) ->
+#            gobj = new Object
+#            gobj[g] = scopeForThisRole.indexOf(g) >= 0
+#            gobj
+#        robj = new Object
+#        robj[r] = go
+#        robj
+#
+
+
+
 
       getUserScope : =>
         pvm.methods.getUserScope.call @name(), (r) =>

@@ -1,0 +1,11 @@
+.user
+    p data-bind="text: name()"
+    /! ko foreach: scopeView
+    p data-bind="text: role"
+    /! ko foreach: $parent.unassignedGroups
+    span.label.label-default data-bind="click: $parents[1].addToScope.bind($data, $parent), text: $data"
+    /! /ko
+    /! ko foreach: groups
+    span.label.label-success data-bind="click: $parents[1].removeFromScope.bind($data, $parent.role), text: $data"
+    /! /ko
+    /! /ko

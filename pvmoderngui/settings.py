@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'viewsandroutes',
     'corsheaders',
+    'slim',
 )
 
 MIDDLEWARE_CLASSES = (

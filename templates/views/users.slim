@@ -1,0 +1,12 @@
+h1 Users
+
+/! ko foreach: users
+user params="name: $data, allGroups: $parent.allGroups"
+button data-bind="click: $parent.deleteUser, text: 'Delete ' + name"
+/! /ko
+
+form data-bind="submit: addUser"
+    input name="username" type="text"
+    input name="password" type="password"
+    select name="role" data-bind="options: allRoles"
+    button type="submit" Add User

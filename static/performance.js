@@ -105,10 +105,11 @@
       })();
 
       Tests.prototype.init = function(params) {
-        var test, _i, _len,
+        var tempArry, test, _i, _len,
           _this = this;
 
         window.factor = 1000000;
+        tempArry = new Array();
         $(document).ajaxComplete(function() {
           var nextTest;
 
@@ -122,8 +123,9 @@
         });
         for (_i = 0, _len = params.length; _i < _len; _i++) {
           test = params[_i];
-          this.tests.push(new Test(test));
+          tempArry.push(new Test(test));
         }
+        this.tests(tempArry);
         return this.tests()[0].run();
       };
 

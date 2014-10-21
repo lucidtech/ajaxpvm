@@ -26,19 +26,18 @@
         var _this = this;
 
         return pvm.methods.listInstanceGroups.call(function(r) {
-          var arr, name, _i, _len, _results;
+          var allGroups, arr, name, _i, _len;
 
           arr = Object.keys(r);
-          _this.allGroups([]);
-          _results = [];
+          allGroups = new Array();
           for (_i = 0, _len = arr.length; _i < _len; _i++) {
             name = arr[_i];
-            _results.push(_this.allGroups.push({
+            allGroups.push({
               name: name,
               details: r[name]
-            }));
+            });
           }
-          return _results;
+          return _this.allGroups(allGroups);
         });
       };
 

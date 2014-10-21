@@ -3,158 +3,29 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <script type="text/javascript" src="/static/jquery/jquery.min.js"></script>
+
+{#    Following scripts if PVM can support CORS - then can ditch Django as SOAP proxy #}
 {#    <script type="text/javascript" src="/static/jquerysoap/jquery.soap.js"></script>#}
 {#    <script type="text/javascript" src="/static/jquerysoap/jquery.xml2json.js"></script>#}
-    <script type="text/javascript" src="/static/knockout/ko.min.js"></script>
-    <script type="text/javascript" src="/static/chartjs/chart.min.js"></script>
-    <script type="text/javascript" src="/static/requirejs/require.min.js"></script>
-{#    <script type="text/javascript" src="/static/requirejs/text.js"></script>#}
 {#    <script type="text/javascript" src="/static/pvminterface.js"></script>#}
+
+    <script type="text/javascript" src="/static/knockout/ko.min.js"></script>
+    <script type="text/javascript" src="/static/requirejs/require.min.js"></script>
     <script type="text/javascript" src="/static/pvmajax.js"></script>
     <script type="text/javascript" src="/static/pvmmethods.js"></script>
+    <script type="text/javascript" src="/static/soapMethods.js"></script>
     <script type="text/javascript" src="/static/performancetasks.js"></script>
     <script type="text/javascript" src="/static/performance.js"></script>
-{#    <script type="text/javascript" src="/static/pvmroles.js"></script>#}
-{#    <script type="text/javascript" src="/static/pvmusers.js"></script>#}
-    <script type="text/javascript" src="/static/soapMethods.js"></script>
+    <script type="text/javascript" src="/static/pvmusers.js"></script>
     <script type="text/javascript" src="/static/ready.js"></script>
 </head>
 <body>
-{#    <div class="login">#}
-{#        <input type="text" data-bind="value: username">#}
-{#        <input type="password" data-bind="value: password">#}
-{#        <button data-bind="click: login">Login</button>#}
-{#    </div>#}
-{#    <dl>#}
-{#        <dt>Dashboard</dt>#}
-{#        <dd>#}
-{#            Shows barchart called protection status (has protected, running, stopped.#}
-{#            Piechart showing storage status#}
-{#            stacked bar chart for system status#}
-{#            critical events list#}
-{#        </dd>#}
-{#        <dt>#}
-{#            Users Admin#}
-{#        </dt>#}
-{#        <dd>#}
-{#            lists users on the left#}
-{#            Users role in the middle - along with permissions for that role#}
-{#            Then an assigned groups list on the right#}
-{#            ----#}
-{#            Take action#}
-{#            add / delete user#}
-{#            change password#}
-{#            change default role (changes the role that a new user has)#}
-{#            assign group (dialog with options for groups)#}
-{#        </dd>#}
-{#        <dt>#}
-{#            Roles Admin#}
-{#        </dt>#}
-{#        <dd>#}
-{#            Lists Role Names on the left#}
-{#            On the right you can choose permissions for the role#}
-{#            -----#}
-{#            Take Action#}
-{#            CRUD roles#}
-{##}
-{#        </dd>#}
-{#        <dt>#}
-{#            Installers#}
-{#        </dt>#}
-{#        <dd>#}
-{#            List you can select - then take aciton to "download"#}
-{#            Take action also has "upload supplemental installer"#}
-{#        </dd>#}
-{#        <dt>#}
-{#            System Settings Admin#}
-{#        </dt>#}
-{#        <dd>#}
-{#            Cloud Credentials#}
-{#            Networking#}
-{#            Key Manager Settings#}
-{#            Syslog Settings#}
-{#            High Availability#}
-{#            SNMP Settings#}
-{#            Unattended Reboot Settings (allows you to specify the max time a machine can be offline before reboot)#}
-{#            Scheduled Event Purge#}
-{#            Physical Server Settings#}
-{#            Export Settings#}
-{#            Shut Down#}
-{#        </dd>#}
-{#        <dt>#}
-{#            Server Management#}
-{#        </dt>#}
-{#        <dd>#}
-{#            Clouds list on the left - includes groups#}
-{#            Middle is list of machines with + next to each name.  Click plus puts view in to disabled spin state (time out on network I guess)#}
-{#            Select on left shows some summary info to the right#}
-{#                Also - you need to select in order to "Take Action"#}
-{#            -------#}
-{#            Take action#}
-{#            start/boot/crud unattended/query readiness for "clone"#}
-{#            Enc/dec/enable/reassign partitions.  & Find shared keys#}
-{#            There is a search box - it does a server side search based on text in the name#}
-{#        </dd>#}
-{#        <dt>#}
-{#            Event Management - Audit Events#}
-{#        </dt>#}
-{#        <dd>#}
-{#            Datatable - paginated.#}
-{#            ---------#}
-{#            Take Action#}
-{#            Purge?#}
-{#            transfer (is this like a backup?)#}
-{#            Generate Compliance Report - (ugly ass PDF)#}
-{##}
-{#        </dd>#}
-{#        <dt>#}
-{#            Event Management - System Events#}
-{#        </dt>#}
-{#        <dd>#}
-{#            Datatable - paginated.#}
-{#            ---------#}
-{#            Take Action#}
-{#            Purge?#}
-{#            transfer (is this like a backup?)#}
-{#            Generate Compliance Report - (ugly ass PDF)#}
-{##}
-{#        </dd>#}
-{#        <dt>#}
-{#            Event Management - Reports#}
-{#        </dt>#}
-{#        <dd>#}
-{#            Options on the left - look like just a dump of system configurations#}
-{##}
-{#            Datatable - paginated.#}
-{#            ---------#}
-{#            Take Action#}
-{#            Purge?#}
-{#            transfer (is this like a backup?)#}
-{#            Generate Compliance Report - (ugly ass PDF)#}
-{##}
-{#        </dd>#}
-{##}
-{#    </dl>#}
 
-<performance params="params: window.testSuite"></performance>
-{#<users></users>#}
+<users></users>
 {#<methods></methods>#}
+{#<performance params="params: window.testSuite"></performance>#}
 
-{#    <div data-bind="foreach: methodNames">#}
-{#        <!-- ko with: $parent.methods[$data] -->#}
-{#        <p data-bind="text: name()"></p>#}
-{#        <div data-bind="foreach: description">#}
-{#            <code>#}
-{#                <p data-bind="text: $data"></p>#}
-{#            </code>#}
-{#        </div>#}
-{#        <ul data-bind="foreach: params">#}
-{#            <li data-bind="text: name + '/' + type"></li>#}
-{#        </ul>#}
-{#        <button data-bind="click: call, text: 'call ' + name()"></button>#}
-{#        <p data-bind="text: result()"></p>#}
-{#        <!-- /ko -->#}
-{#    </div>#}
 </body>
 </html>

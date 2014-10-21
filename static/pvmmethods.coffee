@@ -12,7 +12,9 @@ ko.components.register 'methods',
       loadDescriptions : () ->
         success = (r) =>
           arr = Object.keys r
-          @list.push name: name, description : r[2][name] for name in arr
+          list = new Array()
+          list.push name: name, description : r[name] for name in arr
+          @list list
         pvm.methods.listApi.call success
 
   template:

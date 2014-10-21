@@ -67,6 +67,7 @@ ko.components.register 'performance',
 
       init : (params) ->
         window.factor = 1000000
+        tempArry = new Array()
         $( document ).ajaxComplete =>
           if @lastTest + 1 == @totalTests
             nextTest = 0
@@ -74,7 +75,8 @@ ko.components.register 'performance',
             nextTest = @lastTest + 1
           @lastTest = nextTest
           @tests()[nextTest].run()
-        @tests.push new Test test for test in params
+        tempArry.push new Test test for test in params
+        @tests tempArry
         @tests()[0].run()
 
   template:

@@ -3,7 +3,10 @@ class SOAPMethod
   constructor : (soapMethod) ->
     @name   = ko.observable soapMethod.method
     @params = ko.observableArray()
-    @params.push name: name, type: type for {name, type} in soapMethod.takes
+    tempArry = new Array()
+    tempArry.push name: name, type: type for {name, type} in soapMethod.takes
+    tempArry.sort()
+    @params tempArry
     @description = ko.observable ''
     @host =
       protocol  : window.location.protocol
@@ -27,9 +30,7 @@ class SOAPMethod
 
   successFunction : (r) =>
     console.log 'success'
-    @resultState r[0]
-    @resultMessage r[1]
-    @resultValue r[2]
+    @resultValue r
 
   errorFunction : (r) =>
     console.log 'error'
