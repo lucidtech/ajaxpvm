@@ -1,7 +1,7 @@
 h1 Users
 
-/! ko foreach: users
-user params="name: $data, allGroups: $parent.allGroups"
+/! ko foreach: sortedUsers
+user params="name: $data, allGroups: $parent.allGroups, allRoles: $parent.allRoles"
 button data-bind="click: $parent.deleteUser, text: 'Delete ' + name"
 /! /ko
 

@@ -59,17 +59,22 @@ ko.components.register 'performance',
           @total @total() + elapsed
 
         run : =>
-          @start = Date.now()
           if @params
-            pvm.methods[@call].call @params, @successTimer
+            getParam = (p) =>
+              @start = Date.now()
+              console.log p
+              b = p.match(/true/i)
+              pvm.methods[@call].call !b, @successTimer
+            pvm.methods[@params].call getParam
           else
+            @start = Date.now()
             pvm.methods[@call].call @successTimer
 
       init : (params) ->
         window.factor = 1000000
         tempArry = new Array()
         $( document ).ajaxComplete =>
-          if @lastTest + 1 == @totalTests
+          if @lastTest + 1 >= @totalTests
             nextTest = 0
           else
             nextTest = @lastTest + 1

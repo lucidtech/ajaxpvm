@@ -1,0 +1,28 @@
+select data-bind="value: filteredGroup, options: groupsOptions()"
+select data-bind="value: filterProtected, options: ['all', 'protected', 'unprotected']"
+input type="text" data-bind="value: filterValue, update: "
+table.table-condensed
+  thead
+    tr
+      /th Protected
+      th FQN
+      th Name
+      th Status
+      th IP Address
+      th Platform
+      th DNS Name
+      th UR?
+  tbody
+    /! ko foreach: items
+    tr
+      /td data-bind="text: protected"
+      td data-bind="text: name"
+      /! ko with: instance
+      td data-bind="text: tags.Name"
+      td data-bind="text: state"
+      td data-bind="text: ip_address"
+      td data-bind="text: platform"
+      td data-bind="text: public_dns_name"
+      td data-bind="text: URStatus"
+      /! /ko
+    /! /ko

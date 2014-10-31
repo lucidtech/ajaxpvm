@@ -12,4 +12,3 @@ waitForLogin =  setInterval ->
                     clearInterval waitForLogin
                     ko.applyBindings()
                 , 500
-

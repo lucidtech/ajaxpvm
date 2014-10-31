@@ -7,9 +7,15 @@
     viewModel: PVMUsers = (function() {
       function PVMUsers() {
         this.deleteUser = __bind(this.deleteUser, this);
-        this.init = __bind(this.init, this);        this.users = ko.observableArray([]);
+        this.init = __bind(this.init, this);
+        var _this = this;
+
+        this.users = ko.observableArray([]);
         this.allRoles = ko.observableArray([]);
         this.allGroups = ko.observableArray([]);
+        this.sortedUsers = ko.computed(function() {
+          return _this.users().sort();
+        });
         this.init();
       }
 
@@ -72,61 +78,44 @@
   ko.components.register('user', {
     viewModel: User = (function() {
       function User(params) {
-        this.removeFromScope = __bind(this.removeFromScope, this);
-        this.addToScope = __bind(this.addToScope, this);
+        this.flipScope = __bind(this.flipScope, this);
         this.init = __bind(this.init, this);
         this.getUserRole = __bind(this.getUserRole, this);
         this.getUserScope = __bind(this.getUserScope, this);
+        this.scoped = __bind(this.scoped, this);
         var _this = this;
 
         this.name = ko.observable(params.name);
+        this.role = ko.observable(new Object());
         this.scope = ko.observable(new Object());
-        this.role = ko.observable();
+        this.allRoles = params.allRoles;
         this.allGroups = params.allGroups;
-        this.assignedGroups = ko.computed(function() {
-          var arr, group, role, _i, _j, _len, _len1, _ref, _ref1;
-
-          arr = new Array();
-          _ref = Object.keys(_this.scope());
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            role = _ref[_i];
-            _ref1 = _this.scope()[role];
-            for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-              group = _ref1[_j];
-              arr.push(group);
-            }
-          }
-          return arr;
+        this.sortedRoles = ko.computed(function() {
+          return _this.allRoles().sort();
         });
-        this.unassignedGroups = ko.computed(function() {
-          var arr, item, _i, _len, _ref;
-
-          arr = new Array();
-          _ref = _this.allGroups();
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            item = _ref[_i];
-            arr.push(item.name);
-          }
-          return arr.filter(function(i) {
-            return _this.assignedGroups().indexOf(i) < 0;
-          });
-        });
-        this.scopeView = ko.computed(function() {
-          var arr, role, roles, _i, _len;
-
-          arr = new Array();
-          roles = Object.keys(_this.scope());
-          for (_i = 0, _len = roles.length; _i < _len; _i++) {
-            role = roles[_i];
-            arr.push({
-              role: role,
-              groups: _this.scope()[role]
-            });
-          }
-          return arr;
+        this.sortedGroups = ko.computed(function() {
+          return _this.allGroups().sort();
         });
         this.init();
       }
+
+      User.prototype.scoped = function(role, group) {
+        if (this.scope()[role].indexOf(group) >= 0) {
+          return {
+            buttoncss: 'btn-primary',
+            bool: true,
+            glyphstyle: 'white',
+            glyphcss: 'glyphicon-ok'
+          };
+        } else {
+          return {
+            buttoncss: 'btn-default',
+            bool: false,
+            glyphstyle: '',
+            glyphcss: 'glyphicon-plus'
+          };
+        }
+      };
 
       User.prototype.getUserScope = function() {
         var _this = this;
@@ -149,17 +138,15 @@
         return this.getUserRole();
       };
 
-      User.prototype.addToScope = function(parentObj, thisGroup) {
-        this.scope()[parentObj.role].push(thisGroup);
-        return pvm.methods.updateUserScope.call([this.name(), this.scope()], this.getUserScope);
-      };
-
-      User.prototype.removeFromScope = function(thisRole, thisGroup) {
-        var index;
-
-        index = this.scope()[thisRole].indexOf(thisGroup);
-        if (index > -1) {
-          this.scope()[thisRole].splice(index, 1);
+      User.prototype.flipScope = function(role, group) {
+        console.log(role);
+        console.log(group);
+        if (this.scope()[role].indexOf(group) >= 0) {
+          this.scope()[role] = this.scope()[role].filter(function(i) {
+            return i !== group;
+          });
+        } else {
+          this.scope()[role].push(group);
         }
         return pvm.methods.updateUserScope.call([this.name(), this.scope()], this.getUserScope);
       };

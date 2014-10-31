@@ -92,10 +92,21 @@
         };
 
         Test.prototype.run = function() {
-          this.start = Date.now();
+          var getParam,
+            _this = this;
+
           if (this.params) {
-            return pvm.methods[this.call].call(this.params, this.successTimer);
+            getParam = function(p) {
+              var b;
+
+              _this.start = Date.now();
+              console.log(p);
+              b = p.match(/true/i);
+              return pvm.methods[_this.call].call(!b, _this.successTimer);
+            };
+            return pvm.methods[this.params].call(getParam);
           } else {
+            this.start = Date.now();
             return pvm.methods[this.call].call(this.successTimer);
           }
         };
@@ -113,7 +124,7 @@
         $(document).ajaxComplete(function() {
           var nextTest;
 
-          if (_this.lastTest + 1 === _this.totalTests) {
+          if (_this.lastTest + 1 >= _this.totalTests) {
             nextTest = 0;
           } else {
             nextTest = _this.lastTest + 1;

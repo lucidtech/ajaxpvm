@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/pvm.css">
     <script type="text/javascript" src="/static/jquery/jquery.min.js"></script>
 
 {#    Following scripts if PVM can support CORS - then can ditch Django as SOAP proxy #}
@@ -19,13 +20,38 @@
     <script type="text/javascript" src="/static/performancetasks.js"></script>
     <script type="text/javascript" src="/static/performance.js"></script>
     <script type="text/javascript" src="/static/pvmusers.js"></script>
+    <script type="text/javascript" src="/static/pvminstances.js"></script>
     <script type="text/javascript" src="/static/ready.js"></script>
 </head>
 <body>
 
-<users></users>
-{#<methods></methods>#}
-{#<performance params="params: window.testSuite"></performance>#}
+{#<div class="container">#}
+{#    <div class="row">#}
+        <div class="col-md-3">
+            <users></users>
+        </div>
+        <div class="col-md-9">
+            <clouds></clouds>
+        </div>
+{#    </div>#}
+    {#<methods></methods>#}
+    {#<performance params="params: window.testSuite"></performance>#}
+{#</div>#}
+
+{#need to implement#}
+{#  groups#}
+{#  roles#}
+{#  commands to send to instances#}
+{#  enable/disable features based on role privileges#}
+{#  installer view#}
+{#  network settings#}
+{#  change errors/alerts#}
+{#  styling#}
+{#  background refreshing#}
+{#  login timout#}
+{#  array of soap proxies for session cookie#}
+
+
 
 </body>
 </html>

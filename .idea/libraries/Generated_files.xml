@@ -11,6 +11,7 @@
         <item url="file://$PROJECT_DIR$/static/pvminterface.js" />
         <item url="file://$PROJECT_DIR$/static/pvmroles.js" />
         <item url="file://$PROJECT_DIR$/static/pvmusers.js" />
+        <item url="file://$PROJECT_DIR$/static/pvminstances.js" />
         <item url="file://$PROJECT_DIR$/static/ready.js" />
       </sourceFilesUrls>
     </properties>
@@ -24,6 +25,7 @@
       <root url="file://$PROJECT_DIR$/static/performance.js" />
       <root url="file://$PROJECT_DIR$/static/pvmroles.js" />
       <root url="file://$PROJECT_DIR$/static/pvmusers.js" />
+      <root url="file://$PROJECT_DIR$/static/pvminstances.js" />
       <root url="file://$PROJECT_DIR$/spec/javascripts/jsToSoapProxyCommsTest.js" />
       <root url="file://$PROJECT_DIR$/static/ready.js" />
     </CLASSES>

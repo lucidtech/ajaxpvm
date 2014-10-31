@@ -8,6 +8,8 @@ ko.components.register 'users',
         @users = ko.observableArray([])
         @allRoles = ko.observableArray([])
         @allGroups = ko.observableArray([])
+        @sortedUsers = ko.computed =>
+          @users().sort()
         @init()
 
       getAllRoles : () ->
@@ -48,74 +50,22 @@ ko.components.register 'user',
 
       constructor : (params) ->
         @name = ko.observable(params.name)
+        @role = ko.observable(new Object())
         @scope = ko.observable(new Object())
-        @role = ko.observable()
+        @allRoles = params.allRoles
         @allGroups = params.allGroups
-        @assignedGroups = ko.computed =>
-          arr = new Array()
-          arr.push group for group in @scope()[role] for role in Object.keys @scope()
-          arr
-        @unassignedGroups = ko.computed =>
-          arr = new Array()
-          arr.push item.name for item in @allGroups()
-          arr.filter (i)=>@assignedGroups().indexOf(i) < 0
-        @scopeView = ko.computed =>
-          arr = new Array()
-          roles = Object.keys @scope()
-          arr.push role: role, groups: @scope()[role] for role in roles
-          arr
+        @sortedRoles = ko.computed =>
+          @allRoles().sort()
+        @sortedGroups = ko.computed =>
+          @allGroups().sort()
 
         @init()
 
-#
-#
-#scope -> role : ['gr','gr'], role: [], role: []
-#
-#roles -> [role, role, role]
-#
-#groups -> [group, group, group]
-#
-#memory model
-#
-#role : [group: bool, group: bool, group, bool], role... etc.
-#
-#
-#load
-#	scope -> memory model
-#
-#toggle
-# @role.group(!@role.group())
-#
-#save
-#	memory model -> scope
-#
-#
-#      THIS WILL RETURN THE RIGHT
-#
-#groups = ['one','two','three']
-#roles = ['admin','observer','user']
-#jimmy =
-#    admin : []
-#    observer : ['one']
-#    user : ['two', 'one']
-#
-#jimmyRoleView = (scope, groups, roles) ->
-#    roles.map (r) ->
-#        scopeForThisRole = new Array()
-#        scopeForThisRole = scope[r]
-#        userGroups = new Array()
-#        userGroups = groups
-#        go = userGroups.map (g) ->
-#            gobj = new Object
-#            gobj[g] = scopeForThisRole.indexOf(g) >= 0
-#            gobj
-#        robj = new Object
-#        robj[r] = go
-#        robj
-#
-
-
-
+      scoped : (role, group) =>
+        if @scope()[role].indexOf(group) >= 0
+          buttoncss : 'btn-primary', bool : true, glyphstyle : 'white', glyphcss: 'glyphicon-ok'
+        else
+          buttoncss : 'btn-default', bool : false, glyphstyle : '', glyphcss: 'glyphicon-plus'
 
       getUserScope : =>
         pvm.methods.getUserScope.call @name(), (r) =>
@@ -129,17 +79,16 @@ ko.components.register 'user',
         @getUserScope()
         @getUserRole()
 
-      addToScope: (parentObj, thisGroup) =>
-        @scope()[parentObj.role].push thisGroup
-        pvm.methods.updateUserScope.call [@name(), @scope()], @getUserScope
+      flipScope : (role, group) =>
+        console.log role
+        console.log group
 
-      removeFromScope: (thisRole, thisGroup) =>
-        index = @scope()[thisRole].indexOf thisGroup
-        if index > -1
-          @scope()[thisRole].splice index, 1
-        pvm.methods.updateUserScope.call [@name(), @scope()], @getUserScope
 
-#pvm.methods.updateUserScope.call(['admin', {'admin':['all-machines','HelloDolly']}])
+        if @scope()[role].indexOf(group) >= 0
+          @scope()[role] = @scope()[role].filter (i) -> i != group
+        else
+          @scope()[role].push group
+        pvm.methods.updateUserScope.call [@name(), @scope()], @getUserScope
 
   template:
     require : "/static/requirejs/text.js!views?template=user"

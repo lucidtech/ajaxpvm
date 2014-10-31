@@ -1,0 +1,11 @@
+.row
+  .col-md-12
+    /! ko foreach: cloudsIndex
+    .row
+      .col-md-3
+        h1 data-bind="text: $data"
+        regions params="cloud: $data, regionsIndex: $parent.regionsIndex"
+        groups params="groupsIndex: $parent.groupsIndex"
+      .col-md-9
+        instances params="cloud: $data, regions: $parent.regionsIndex, groups: $parent.groupsIndex"
+    /! /ko
