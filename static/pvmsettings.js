@@ -137,6 +137,88 @@
     }
   });
 
+  ko.components.register('keymanager', {
+    viewModel: Networking = (function() {
+      function Networking(params) {
+        this.init = __bind(this.init, this);
+        this.keyManagerProperties = __bind(this.keyManagerProperties, this);
+        this.keyManagerCredentials = __bind(this.keyManagerCredentials, this);
+        this.updateProperties = __bind(this.updateProperties, this);
+        this.updateCredentials = __bind(this.updateCredentials, this);
+        var _this = this;
+
+        this.keyManager = params.keymanager;
+        this.userName = ko.observable();
+        this.newUserName = ko.observable(this.userName());
+        this.newPassword = ko.observable('');
+        this.ipAddress = ko.observable();
+        this.port = ko.observable();
+        this.protocol = ko.observable();
+        this.certificate = ko.observable();
+        this.newIpAddress = ko.observable(this.ipAddress());
+        this.newPort = ko.observable(this.port());
+        this.newProtocol = ko.observable(this.protocol());
+        this.newCertificate = ko.observable(this.certificate());
+        this.updateKeyManager = ko.computed(function() {
+          return _this.keyManager({
+            userName: _this.userName,
+            ipAddress: _this.ipAddress,
+            port: _this.port,
+            protocol: _this.protocol,
+            certificate: _this.certificate
+          });
+        });
+        this.init();
+      }
+
+      Networking.prototype.updateCredentials = function() {
+        return pvm.methods.setKeySecureCredentials.call([this.newUserName90, this.newPassword()], this.keyManagerCredentials);
+      };
+
+      Networking.prototype.updateProperties = function() {
+        return pvm.methods.setKeySecureProperties.call({
+          NAE_IP: this.newIpAddress(),
+          NAE_Port: this.newPort(),
+          Protocol: this.newProtocol()
+        }, this.keyManagerCredentials);
+      };
+
+      Networking.prototype.keyManagerCredentials = function() {
+        var keyManagerCreds,
+          _this = this;
+
+        keyManagerCreds = function(r) {
+          return _this.userName(r);
+        };
+        return pvm.methods.getKeySecureCredentials.call(keyManagerCreds);
+      };
+
+      Networking.prototype.keyManagerProperties = function() {
+        var keyManager,
+          _this = this;
+
+        keyManager = function(r) {
+          _this.ipAddress(r.NAE_IP);
+          _this.port(r.NAE_Port);
+          _this.protocol(r.Protocol);
+          return _this.certificate(r.CA_Cert);
+        };
+        return pvm.methods.getKeySecureProperties.call(keyManager);
+      };
+
+      Networking.prototype.init = function() {
+        this.keyManagerProperties();
+        return this.keyManagerCredentials();
+      };
+
+      return Networking;
+
+    })(),
+    template: {
+      require: "/static/requirejs/text.js!views?template=settings/keymanager"
+    }
+  });
+
 }).call(this);
 
 /*

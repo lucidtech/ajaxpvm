@@ -87,3 +87,54 @@ ko.components.register 'networking',
 
   template:
     require : "/static/requirejs/text.js!views?template=settings/networking"
+
+ko.components.register 'keymanager',
+
+  viewModel:
+    class Networking
+
+      constructor: (params) ->
+        @keyManager = params.keymanager
+        @userName = ko.observable()
+        @newUserName = ko.observable(@userName())
+        @newPassword = ko.observable('')
+        @ipAddress = ko.observable()
+        @port = ko.observable()
+        @protocol = ko.observable()
+        @certificate = ko.observable()
+        @newIpAddress = ko.observable(@ipAddress())
+        @newPort = ko.observable(@port())
+        @newProtocol = ko.observable(@protocol())
+        @newCertificate = ko.observable(@certificate())
+        @updateKeyManager = ko.computed =>
+          @keyManager userName: @userName, ipAddress: @ipAddress, port: @port, protocol: @protocol, certificate: @certificate
+        @init()
+
+      updateCredentials : () =>
+        pvm.methods.setKeySecureCredentials.call [@newUserName90, @newPassword()], @keyManagerCredentials
+
+      updateProperties : () =>
+        pvm.methods.setKeySecureProperties.call {NAE_IP: @newIpAddress(), NAE_Port: @newPort(), Protocol: @newProtocol()}, @keyManagerCredentials
+
+
+      keyManagerCredentials : () =>
+        keyManagerCreds = (r) =>
+          @userName r
+        pvm.methods.getKeySecureCredentials.call keyManagerCreds
+
+      keyManagerProperties : () =>
+        keyManager = (r) =>
+          @ipAddress r.NAE_IP
+          @port r.NAE_Port
+          @protocol r.Protocol
+          @certificate r.CA_Cert
+        pvm.methods.getKeySecureProperties.call keyManager
+
+
+      init : () =>
+        @keyManagerProperties()
+        @keyManagerCredentials()
+
+
+  template:
+    require : "/static/requirejs/text.js!views?template=settings/keymanager"
