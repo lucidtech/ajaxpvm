@@ -91,7 +91,7 @@ ko.components.register 'networking',
 ko.components.register 'keymanager',
 
   viewModel:
-    class Networking
+    class KeyManager
 
       constructor: (params) ->
         @keyManager = params.keymanager
@@ -138,3 +138,58 @@ ko.components.register 'keymanager',
 
   template:
     require : "/static/requirejs/text.js!views?template=settings/keymanager"
+
+ko.components.register 'syslog',
+
+  viewModel:
+    class Syslog
+
+      constructor: (params) ->
+        @syslog = params.syslog
+
+
+#updateSyslogServer
+#This function updates syslog server addresses for both primary syslog server and secondary syslog server. The primary syslog server IP and port must be provided. The secondary syslog server IP and port are optional.
+#After the syslog servers are updated, the syslog forwarding is disabled. Call the enableSyslogForwarding function to enable syslog forwarding.
+
+        @ip1 = ko.observable()
+        @port1 = ko.observable()
+        @ip2 = ko.observable()
+        @port2 = ko.observable()
+        @forwarding = ko.observable()
+        @newIp1 = ko.observable('')
+        @newPort1 = ko.observable('')
+        @newIp2 = ko.observable('')
+        @newPort2 = ko.observable('')
+        @updateSyslog = ko.computed =>
+          @syslog ip1: @ip1, ip2: @ip2, port1: @port1, port2: @port2, forwarding: @forwarding
+        @init()
+
+#      updateCredentials : () =>
+#        pvm.methods.setKeySecureCredentials.call [@newUserName90, @newPassword()], @keyManagerCredentials
+#
+#      updateProperties : () =>
+#        pvm.methods.setKeySecureProperties.call {NAE_IP: @newIpAddress(), NAE_Port: @newPort(), Protocol: @newProtocol()}, @keyManagerCredentials
+#
+#
+#      keyManagerCredentials : () =>
+#        keyManagerCreds = (r) =>
+#          @userName r
+#        pvm.methods.getKeySecureCredentials.call keyManagerCreds
+#
+#      keyManagerProperties : () =>
+#        keyManager = (r) =>
+#          @ipAddress r.NAE_IP
+#          @port r.NAE_Port
+#          @protocol r.Protocol
+#          @certificate r.CA_Cert
+#        pvm.methods.getKeySecureProperties.call keyManager
+#
+#
+#      init : () =>
+#        @keyManagerProperties()
+#        @keyManagerCredentials()
+
+
+  template:
+    require : "/static/requirejs/text.js!views?template=settings/syslog"

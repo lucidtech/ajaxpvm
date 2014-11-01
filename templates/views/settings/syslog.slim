@@ -1,0 +1,17 @@
+h2 Syslog Settings
+p IP1
+p data-bind="text: ip1"
+input data-bind="value: newIp1"
+p IP1
+p data-bind="text: port1"
+input data-bind="value: newPort1"
+p IP2
+p data-bind="text: ip2"
+input data-bind="value: newIp2"
+p IP1
+p data-bind="text: port2"
+input data-bind="value: newPort2"
+p Forwarding
+p data-bind="text: forwarding"
+select data-bind="value: newForwarding, options: ['on', 'of']"
+button data-bind="click: updateSyslog" update
