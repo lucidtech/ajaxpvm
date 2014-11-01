@@ -5,16 +5,22 @@
 
   ko.components.register('users', {
     viewModel: PVMUsers = (function() {
-      function PVMUsers() {
-        this.deleteUser = __bind(this.deleteUser, this);
-        this.init = __bind(this.init, this);
+      function PVMUsers(params) {
         var _this = this;
 
+        this.params = params;
+        this.deleteUser = __bind(this.deleteUser, this);
+        this.init = __bind(this.init, this);
         this.users = ko.observableArray([]);
         this.allRoles = ko.observableArray([]);
-        this.allGroups = ko.observableArray([]);
         this.sortedUsers = ko.computed(function() {
           return _this.users().sort();
+        });
+        this.sortedRoles = ko.computed(function() {
+          return _this.allRoles().sort();
+        });
+        this.sortedGroups = ko.computed(function() {
+          return Object.keys(_this.params.groups());
         });
         this.init();
       }
@@ -28,25 +34,6 @@
         });
       };
 
-      PVMUsers.prototype.getAllGroups = function() {
-        var _this = this;
-
-        return pvm.methods.listInstanceGroups.call(function(r) {
-          var allGroups, arr, name, _i, _len;
-
-          arr = Object.keys(r);
-          allGroups = new Array();
-          for (_i = 0, _len = arr.length; _i < _len; _i++) {
-            name = arr[_i];
-            allGroups.push({
-              name: name,
-              details: r[name]
-            });
-          }
-          return _this.allGroups(allGroups);
-        });
-      };
-
       PVMUsers.prototype.init = function() {
         var refreshUsers,
           _this = this;
@@ -55,7 +42,6 @@
           return _this.users(r);
         };
         pvm.methods.listUsers.call(refreshUsers);
-        this.getAllGroups();
         return this.getAllRoles();
       };
 
@@ -82,40 +68,41 @@
         this.init = __bind(this.init, this);
         this.getUserRole = __bind(this.getUserRole, this);
         this.getUserScope = __bind(this.getUserScope, this);
-        this.scoped = __bind(this.scoped, this);
         var _this = this;
 
         this.name = ko.observable(params.name);
         this.role = ko.observable(new Object());
         this.scope = ko.observable(new Object());
-        this.allRoles = params.allRoles;
-        this.allGroups = params.allGroups;
-        this.sortedRoles = ko.computed(function() {
-          return _this.allRoles().sort();
-        });
-        this.sortedGroups = ko.computed(function() {
-          return _this.allGroups().sort();
-        });
+        this.scoped = function(role, group) {
+          return ko.computed(function() {
+            if (Object.keys(_this.scope()).length !== 0) {
+              if (_this.scope()[role].indexOf(group) >= 0) {
+                return {
+                  buttoncss: 'btn-primary',
+                  bool: true,
+                  glyphstyle: 'white',
+                  glyphcss: 'glyphicon-ok'
+                };
+              } else {
+                return {
+                  buttoncss: 'btn-default',
+                  bool: false,
+                  glyphstyle: '',
+                  glyphcss: 'glyphicon-plus'
+                };
+              }
+            } else {
+              return {
+                buttoncss: '',
+                bool: false,
+                glyphstyle: '',
+                glyphcss: ''
+              };
+            }
+          });
+        };
         this.init();
       }
-
-      User.prototype.scoped = function(role, group) {
-        if (this.scope()[role].indexOf(group) >= 0) {
-          return {
-            buttoncss: 'btn-primary',
-            bool: true,
-            glyphstyle: 'white',
-            glyphcss: 'glyphicon-ok'
-          };
-        } else {
-          return {
-            buttoncss: 'btn-default',
-            bool: false,
-            glyphstyle: '',
-            glyphcss: 'glyphicon-plus'
-          };
-        }
-      };
 
       User.prototype.getUserScope = function() {
         var _this = this;
@@ -139,8 +126,6 @@
       };
 
       User.prototype.flipScope = function(role, group) {
-        console.log(role);
-        console.log(group);
         if (this.scope()[role].indexOf(group) >= 0) {
           this.scope()[role] = this.scope()[role].filter(function(i) {
             return i !== group;

@@ -9,7 +9,6 @@ ko.components.register 'clouds',
 
         # registered here in the parent - so that child siblings can access
         @regionsIndex = ko.observableArray()
-        @groupsIndex = ko.observableArray()
 
         @init()
 
@@ -48,28 +47,6 @@ ko.components.register 'regions',
   template:
     require : "/static/requirejs/text.js!views?template=regions"
 
-ko.components.register 'groups',
-
-  viewModel:
-    class Groups
-
-      constructor : (@params) ->
-        @groups = {}
-        @groupsIndex = @params.groupsIndex
-        @init()
-
-      getGroups : () =>
-        loadList = (r) =>
-          @groups = r
-          @groupsIndex Object.keys @groups
-        pvm.methods.listInstanceGroups.call loadList
-
-      init : () ->
-        @getGroups()
-
-  template:
-    require : "/static/requirejs/text.js!views?template=groups"
-
 
 ko.components.register 'instances',
 
@@ -79,7 +56,7 @@ ko.components.register 'instances',
       constructor: (params) ->
         # unwrap params
         @cloud = params.cloud
-        @groups = params.groups
+        @groups = pvmGroups.groupsIndex
         @regions = params.regions
         # -- these are observables - and will update as their models update
         @groupsInstancesIndex = ko.observable(new Object)
@@ -92,7 +69,7 @@ ko.components.register 'instances',
         @filteredGroup = ko.observable('')
         @filterProtected = ko.observable('')
         @groupsOptions = ko.computed =>
-          ['all Groups'].concat @groups()
+          ['all Groups'].concat @groups
 
         @updateInstances = ko.computed =>
           loadRegionInstances = (region) =>

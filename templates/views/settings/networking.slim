@@ -1,0 +1,27 @@
+h2 DNS
+/! ko with: dns
+p data-bind="text: nameserver[0]"
+/! /ko
+h2 Network Interfaces
+/! ko foreach: interfaces
+/! ko with: details
+p data-bind="text: name"
+p data-bind="text: ip"
+p data-bind="text: mask"
+p data-bind="text: mac"
+p data-bind="text: mode"
+p data-bind="text: bcast"
+p data-bind="text: type"
+/! /ko
+/! /ko
+h2 Routes
+/! ko foreach: routes
+p data-bind="text: gw"
+p data-bind="text: netmask"
+p data-bind="text: network"
+p data-bind="text: dev"
+/! /ko
+h2 PVM IP Addresses
+/! ko foreach: pvmIps
+p data-bind="text: $data"
+/! /ko

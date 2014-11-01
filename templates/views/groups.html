@@ -1,1 +1,1 @@
-<h2>Groups</h2><!--ko foreach: groupsIndex--><p data-bind="text: $data"></p><!--/ko-->
+<h2>Groups</h2><!--ko foreach: groupsIndex--><p data-bind="text: $data"></p><button class="btn btn-default" data-bind="click: $parent.deleteGroup">Delete</button><!--/ko--><form data-bind="submit: addGroup"><input name="groupname" type="text" /><button type="submit">Add Group</button></form>

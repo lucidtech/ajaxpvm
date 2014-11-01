@@ -15,43 +15,31 @@
     <script type="text/javascript" src="/static/knockout/ko.min.js"></script>
     <script type="text/javascript" src="/static/requirejs/require.min.js"></script>
     <script type="text/javascript" src="/static/pvmajax.js"></script>
+    <script type="text/javascript" src="/static/pvmobjects.js"></script>
+    <script type="text/javascript" src="/static/pvmgroups.js"></script>
     <script type="text/javascript" src="/static/pvmmethods.js"></script>
     <script type="text/javascript" src="/static/soapMethods.js"></script>
     <script type="text/javascript" src="/static/performancetasks.js"></script>
     <script type="text/javascript" src="/static/performance.js"></script>
     <script type="text/javascript" src="/static/pvmusers.js"></script>
     <script type="text/javascript" src="/static/pvminstances.js"></script>
+    <script type="text/javascript" src="/static/pvmsettings.js"></script>
     <script type="text/javascript" src="/static/ready.js"></script>
 </head>
 <body>
 
-{#<div class="container">#}
-{#    <div class="row">#}
-        <div class="col-md-3">
-            <users></users>
-        </div>
-        <div class="col-md-9">
-            <clouds></clouds>
-        </div>
-{#    </div>#}
-    {#<methods></methods>#}
-    {#<performance params="params: window.testSuite"></performance>#}
+<objects></objects>
+{#<div class="col-md-3">#}
+{#  <users></users>#}
 {#</div>#}
-
-{#need to implement#}
-{#  groups#}
-{#  roles#}
-{#  commands to send to instances#}
-{#  enable/disable features based on role privileges#}
-{#  installer view#}
-{#  network settings#}
-{#  change errors/alerts#}
-{#  styling#}
-{#  background refreshing#}
-{#  login timout#}
-{#  array of soap proxies for session cookie#}
-
-
+{#<div class="col-md-9">#}
+{#  <div class="row">#}
+{#    <clouds></clouds>#}
+{#  </div>#}
+{#  <div class="row">#}
+{#    <groups></groups>#}
+{#  </div>#}
+{#</div>#}
 
 </body>
 </html>

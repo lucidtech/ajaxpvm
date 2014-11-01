@@ -46,5 +46,5 @@ class PVMAjax
                     @successFunction r
       error     : @errorFunction
 
-
 window.PVMAjax = PVMAjax
+#window.pvm = new PVMAjax 'https', '192.168.92.146', 'soap', '8080'

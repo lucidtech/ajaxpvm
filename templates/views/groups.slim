@@ -1,4 +1,8 @@
 h2 Groups
 /! ko foreach: groupsIndex
 p data-bind="text: $data"
+button.btn.btn-default data-bind="click: $parent.deleteGroup" Delete
 /! /ko
+form data-bind="submit: addGroup"
+  input name="groupname" type="text"
+  button type="submit" Add Group

@@ -1,3 +1,0 @@
-class PVMGroups
-
-  constructor: (@pvm) ->

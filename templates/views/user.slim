@@ -1,10 +1,10 @@
 .user
     p data-bind="text: name()"
-    /! ko foreach: sortedRoles
+    /! ko foreach: $parents[1].sortedRoles
     p data-bind="text: $data"
-    /! ko foreach: $parent.sortedGroups
-    button.btn.btn-xs type="button" data-bind="css: $parents[1].scoped($parent, name).buttoncss, click: function(data, event){$parents[1].flipScope($parent, name)}"
-      span data-bind="text: name"
-      span.glyphicon data-bind="css: $parents[1].scoped($parent, name).glyphcss"
+    /! ko foreach: $parents[2].sortedGroups
+    button.btn.btn-xs type="button" data-bind="css: $parents[1].scoped($parent, $data)().buttoncss, click: function(data, event){$parents[1].flipScope($parent, $data)}"
+      span data-bind="text: $data"
+      span.glyphicon data-bind="css: $parents[1].scoped($parent, $data)().glyphcss"
     /! /ko
     /! /ko
