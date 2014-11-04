@@ -79,16 +79,15 @@
         var _this = this;
 
         this.cloud = params.cloud;
-        this.groups = pvmGroups.groupsIndex;
+        this.groupsIndex = ko.observable().subscribeTo('groupsIndex');
         this.regions = params.regions;
-        this.groupsInstancesIndex = ko.observable(new Object);
         this.protectedInstancesIndex = new Object();
         this.instances = ko.observableArray();
         this.filterValue = ko.observable('');
         this.filteredGroup = ko.observable('');
         this.filterProtected = ko.observable('');
         this.groupsOptions = ko.computed(function() {
-          return ['all Groups'].concat(_this.groups);
+          return ['all Groups'].concat(_this.groupsIndex());
         });
         this.updateInstances = ko.computed(function() {
           var loadRegionInstances, region, _i, _len, _ref, _results;
@@ -118,22 +117,6 @@
           }
           return _results;
         });
-        this.setGroupIndex = ko.computed(function() {
-          var key, loadGroupsIndex, _i, _len, _ref, _results;
-
-          loadGroupsIndex = function(key) {
-            return pvm.methods.getInstanceGroup.call(key, function(list) {
-              return _this.groupsInstancesIndex()[key] = list;
-            });
-          };
-          _ref = _this.groups();
-          _results = [];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            key = _ref[_i];
-            _results.push(loadGroupsIndex(key));
-          }
-          return _results;
-        });
         this.items = ko.computed(function() {
           var match;
 
@@ -154,7 +137,7 @@
               if (_this.filteredGroup() === "all Groups") {
                 return true;
               } else {
-                return _this.groupsInstancesIndex()[_this.filteredGroup().toString()].indexOf(obj.name) >= 0;
+                return _this.groupsIndex()[_this.filteredGroup().toString()].indexOf(obj.name) >= 0;
               }
             };
             testForProtected = function() {

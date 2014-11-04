@@ -3,7 +3,7 @@ dl
   dt UserName
   dd data-bind="text: userName"
 p new User Name
-input type="text" data-bind="value: newUserName"
+input type="text" data-bind="value: newUserName, default: userName"
 p new Password
 input type="password" data-bind="value: newPassword"
 button.btn.btn-default data-bind="click: updateCredentials" update

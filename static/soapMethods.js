@@ -4,7 +4,7 @@
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   SOAPMethod = (function() {
-    function SOAPMethod(soapMethod) {
+    function SOAPMethod(soapMethod, host) {
       this.errorFunction = __bind(this.errorFunction, this);
       this.successFunction = __bind(this.successFunction, this);
       this.pvmError = __bind(this.pvmError, this);
@@ -25,11 +25,7 @@
       tempArry.sort();
       this.params(tempArry);
       this.description = ko.observable('');
-      this.host = {
-        protocol: window.location.protocol,
-        host: window.location.host,
-        route: "pvm"
-      };
+      this.host = host;
       this.resultValue = ko.observable();
       this.resultState = ko.observable();
       this.resultMessage = ko.observable();
@@ -46,22 +42,21 @@
       });
     }
 
-    SOAPMethod.prototype.pvmError = function(r) {
-      return alert(r[1]);
+    SOAPMethod.prototype.pvmError = function(message) {
+      return alert(message);
     };
 
     SOAPMethod.prototype.successFunction = function(r) {
-      console.log('success');
-      return this.resultValue(r);
+      return console.log('success');
     };
 
     SOAPMethod.prototype.errorFunction = function(r) {
-      console.log('error');
-      return console.log(r);
+      return console.log('error');
     };
 
     SOAPMethod.prototype.call = function(context, event, paramsArr, success, error) {
-      var name, params, pvmError;
+      var name, params, pvmError,
+        _this = this;
 
       name = this.name();
       if (arguments.length === 0) {
@@ -111,10 +106,13 @@
           params: params
         },
         success: function(r) {
+          _this.resultState(r[0]);
+          _this.resultMessage(r[1]);
+          _this.resultValue(r[2]);
           if (r[0] === 0) {
             return success(r[2]);
           } else {
-            return pvmError(r);
+            return pvmError(_this.resultMessage());
           }
         },
         error: error

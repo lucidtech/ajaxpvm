@@ -5,17 +5,16 @@
 
   ko.components.register('groups', {
     viewModel: Groups = (function() {
-      function Groups(params) {
-        var _this = this;
-
-        this.params = params;
+      function Groups() {
         this.init = __bind(this.init, this);
         this.deleteGroup = __bind(this.deleteGroup, this);
         this.getGroups = __bind(this.getGroups, this);
-        this.groups = this.params.groups;
+        var _this = this;
+
+        this.groups = ko.observable(new Object());
         this.groupsIndex = ko.computed(function() {
           return Object.keys(_this.groups());
-        });
+        }).publishOn('groupsIndex');
         this.init();
       }
 

@@ -56,10 +56,9 @@ ko.components.register 'instances',
       constructor: (params) ->
         # unwrap params
         @cloud = params.cloud
-        @groups = pvmGroups.groupsIndex
+        @groupsIndex = ko.observable().subscribeTo('groupsIndex')
         @regions = params.regions
         # -- these are observables - and will update as their models update
-        @groupsInstancesIndex = ko.observable(new Object)
         @protectedInstancesIndex = new Object()
         # -- hold all the instance objects, and an index to them
         @instances = ko.observableArray()
@@ -69,7 +68,7 @@ ko.components.register 'instances',
         @filteredGroup = ko.observable('')
         @filterProtected = ko.observable('')
         @groupsOptions = ko.computed =>
-          ['all Groups'].concat @groups
+          ['all Groups'].concat @groupsIndex()
 
         @updateInstances = ko.computed =>
           loadRegionInstances = (region) =>
@@ -78,12 +77,6 @@ ko.components.register 'instances',
               tempArray.push new Instance list[obj], obj, region for obj in Object.keys list
               @instances tempArray
           loadRegionInstances region for region in @regions()
-
-        @setGroupIndex = ko.computed =>
-          loadGroupsIndex = (key) =>
-            pvm.methods.getInstanceGroup.call key, (list) =>
-              @groupsInstancesIndex()[key] = list
-          loadGroupsIndex key for key in @groups()
 
         @items = ko.computed =>
           match = (obj) =>
@@ -97,7 +90,7 @@ ko.components.register 'instances',
               if @filteredGroup() == "all Groups"
                  true
               else
-                 @groupsInstancesIndex()[@filteredGroup().toString()].indexOf(obj.name) >= 0
+                 @groupsIndex()[@filteredGroup().toString()].indexOf(obj.name) >= 0
             testForProtected = () =>
               switch @filterProtected()
                 when 'protected'

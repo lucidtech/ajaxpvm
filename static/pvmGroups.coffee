@@ -3,10 +3,11 @@ ko.components.register 'groups',
   viewModel:
     class Groups
 
-      constructor : (@params) ->
-        @groups       = @params.groups
+      constructor : () ->
+        @groups       = ko.observable(new Object())
         @groupsIndex  = ko.computed =>
           Object.keys @groups()
+        .publishOn('groupsIndex')
         @init()
 
       getGroups : () =>

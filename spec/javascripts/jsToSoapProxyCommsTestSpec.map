@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "jsToSoapProxyCommsTestSpec.js",
+  "sourceRoot": "",
+  "sources": [
+    "jsToSoapProxyCommsTestSpec.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA;CAAA"
+}

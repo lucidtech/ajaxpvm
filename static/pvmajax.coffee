@@ -1,13 +1,13 @@
 class PVMAjax
 
-  constructor : (@pvmProtocol, @pvmURL, @pvmRoute, @pvmPort) ->
+  constructor : (@pvmProtocol, @pvmURL, @pvmRoute, @pvmPort, hostLocation) ->
     @username = ko.observable('')
     @password = ko.observable('')
     @loginSuccess = ko.observable(false)
     @methods  = new Object()
     @host =
-      protocol  : window.location.protocol
-      host      : window.location.host
+      protocol  : hostLocation.protocol
+      host      : hostLocation.host
       route     : "pvm"
 
   successFunction : (r) =>
@@ -42,7 +42,7 @@ class PVMAjax
       dataType  : 'json'
       url       : @host.protocol + '//' + @host.host + '/methods'
       success   : (r) =>
-                    @methods[m.method] = new SOAPMethod m for m in r
+                    @methods[m.method] = new SOAPMethod m, @host for m in r
                     @successFunction r
       error     : @errorFunction
 

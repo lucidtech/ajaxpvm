@@ -5,12 +5,11 @@
 
   ko.components.register('users', {
     viewModel: PVMUsers = (function() {
-      function PVMUsers(params) {
-        var _this = this;
-
-        this.params = params;
+      function PVMUsers() {
         this.deleteUser = __bind(this.deleteUser, this);
         this.init = __bind(this.init, this);
+        var _this = this;
+
         this.users = ko.observableArray([]);
         this.allRoles = ko.observableArray([]);
         this.sortedUsers = ko.computed(function() {
@@ -19,9 +18,7 @@
         this.sortedRoles = ko.computed(function() {
           return _this.allRoles().sort();
         });
-        this.sortedGroups = ko.computed(function() {
-          return Object.keys(_this.params.groups());
-        });
+        this.sortedGroups = ko.observable().subscribeTo('groupsIndex');
         this.init();
       }
 

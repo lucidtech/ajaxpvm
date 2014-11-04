@@ -16,8 +16,15 @@
 src_files:
   - "static/jquery/jquery.min.js"
   - "static/knockout/ko.min.js"
+  - "static/knockout/knockout-postbox.min.js"
+  - "static/requirejs/require.min.js"
   - "static/pvmajax.js"
   - "static/soapmethods.js"
+  - "static/pvmgroups.js"
+  - "static/pvmmethods.js"
+  - "static/pvmusers.js"
+  - "static/pvminstances.js"
+  - "static/pvmsettings.js"
 
 # stylesheets
 #

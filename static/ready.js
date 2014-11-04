@@ -2,7 +2,10 @@
 (function() {
   var waitForLogin;
 
-  window.pvm = new PVMAjax('https', '192.168.92.146', 'soap', '8080');
+  window.pvm = new PVMAjax('https', '192.168.92.146', 'soap', '8080', {
+    protocol: 'http',
+    host: 'localhost:8000'
+  });
 
   pvm.username('admin');
 

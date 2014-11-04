@@ -4,15 +4,14 @@ ko.components.register 'users',
   viewModel:
     class PVMUsers
 
-      constructor: (@params) ->
+      constructor: () ->
         @users = ko.observableArray([])
         @allRoles = ko.observableArray([])
         @sortedUsers = ko.computed =>
           @users().sort()
         @sortedRoles = ko.computed =>
           @allRoles().sort()
-        @sortedGroups = ko.computed =>
-          Object.keys @params.groups()
+        @sortedGroups = ko.observable().subscribeTo('groupsIndex')
         @init()
 
       getAllRoles : () ->

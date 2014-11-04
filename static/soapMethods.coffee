@@ -1,6 +1,6 @@
 class SOAPMethod
 
-  constructor : (soapMethod) ->
+  constructor : (soapMethod, host) ->
     @name   = ko.observable soapMethod.method
     @params = ko.observableArray()
     tempArry = new Array()
@@ -8,10 +8,7 @@ class SOAPMethod
     tempArry.sort()
     @params tempArry
     @description = ko.observable ''
-    @host =
-      protocol  : window.location.protocol
-      host      : window.location.host
-      route     : "pvm"
+    @host = host
     @resultValue = ko.observable()
     @resultState = ko.observable()
     @resultMessage = ko.observable()
@@ -25,16 +22,14 @@ class SOAPMethod
         null
 
 
-  pvmError : (r) =>
-    alert r[1]
+  pvmError : (message) =>
+    alert message
 
   successFunction : (r) =>
     console.log 'success'
-    @resultValue r
 
   errorFunction : (r) =>
     console.log 'error'
-    console.log r
 
   call : (context, event, paramsArr, success, error) ->
 
@@ -96,11 +91,14 @@ class SOAPMethod
       data      :
         method    : name
         params    : params
-      success   : (r) ->
+      success   : (r) =>
+        @resultState r[0]
+        @resultMessage r[1]
+        @resultValue r[2]
         if r[0] == 0
           success r[2]
         else
-          pvmError r
+          pvmError @resultMessage()
       error     : error
 
 window.SOAPMethod = SOAPMethod

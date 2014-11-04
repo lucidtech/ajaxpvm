@@ -4,7 +4,7 @@
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   PVMAjax = (function() {
-    function PVMAjax(pvmProtocol, pvmURL, pvmRoute, pvmPort) {
+    function PVMAjax(pvmProtocol, pvmURL, pvmRoute, pvmPort, hostLocation) {
       this.pvmProtocol = pvmProtocol;
       this.pvmURL = pvmURL;
       this.pvmRoute = pvmRoute;
@@ -16,8 +16,8 @@
       this.loginSuccess = ko.observable(false);
       this.methods = new Object();
       this.host = {
-        protocol: window.location.protocol,
-        host: window.location.host,
+        protocol: hostLocation.protocol,
+        host: hostLocation.host,
         route: "pvm"
       };
     }
@@ -67,7 +67,7 @@
 
           for (_i = 0, _len = r.length; _i < _len; _i++) {
             m = r[_i];
-            _this.methods[m.method] = new SOAPMethod(m);
+            _this.methods[m.method] = new SOAPMethod(m, _this.host);
           }
           return _this.successFunction(r);
         },
