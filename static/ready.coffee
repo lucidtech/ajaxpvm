@@ -1,4 +1,4 @@
-window.pvm = new PVMAjax 'https', '192.168.92.146', 'soap', '8080', {protocol: 'http', host: 'localhost:8000'}
+window.pvm = new PVMAjax 'https', '192.168.92.146', 'soap', '8080', {protocol: 'http:', host: 'localhost:8000'}
 
 #bypass manual login for testing
 pvm.username 'admin'

@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "physicalserver.js",
+  "sourceRoot": "",
+  "sources": [
+    "physicalserver.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA;CAAA"
+}

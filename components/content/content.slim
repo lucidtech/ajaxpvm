@@ -1,0 +1,24 @@
+nav.navbar.navbar-default role="navigation"
+  .container-fluid
+    .navbar-header
+      a.navbar-brand href="#" ProtectV
+  ul.nav.nav-pills
+    /! ko foreach: views
+    li data-bind="css: {active: $parent.currentView() == $data}"
+      a data-bind="text:$data, attr:{href:'#' + $data}, click: function(){$parent.currentView($data)}"
+    /! /ko
+  ul.nav.navbar-nav.navbar-right
+    li 2.0 UI Alpha
+
+.container
+  div data-bind="visible: currentView() == 'users'"
+    users
+  div data-bind="visible: currentView() == 'groups'"
+    groups
+  div data-bind="visible: currentView() == 'clouds'"
+    clouds
+  div data-bind="visible: currentView() == 'settings'"
+    settings
+  div data-bind="visible: currentView() == 'methods'"
+    methods
+

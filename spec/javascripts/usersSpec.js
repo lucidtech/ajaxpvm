@@ -44,7 +44,7 @@
                 name: u.users()[1]
               });
               return interval = setInterval(function() {
-                if (Object.keys(user.role()).length > 0 && Object.keys(user.scope()).length > 0) {
+                if (user.role() !== "" && Object.keys(user.scope()).length > 0) {
                   clearInterval(interval);
                   return done();
                 }
@@ -55,7 +55,7 @@
       }, 300);
     });
     it("has a role for the user", function() {
-      return expect(Object.keys(user.role()).length).toBeGreaterThan(0);
+      return expect(user.role().length).toBeGreaterThan(0);
     });
     it("has a scope for the user", function() {
       return expect(Object.keys(user.scope()).length).toBeGreaterThan(0);
@@ -69,7 +69,7 @@
       currentButtonCSS = user.scoped(user.role(), g.groupsIndex()[0]).buttoncss;
       user.flipScope(user.role(), g.groupsIndex()[0]);
       return setTimeout(function() {
-        expect(user.scoped(user.role(), g.groupsIndex()[0]).buttoncss).not.toBe(currentButtonCSS);
+        expect(user.scoped(user.role(), g.groupsIndex()[0])().buttoncss).not.toBe(currentButtonCSS);
         return done();
       }, 3000);
     });

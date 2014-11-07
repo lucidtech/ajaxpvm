@@ -4,40 +4,50 @@ html
     meta charset="UTF-8"
       title
       link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"
-        link href="/static/css/pvm.css" rel="stylesheet"
-          script src="/static/jquery/jquery.min.js" type="text/javascript"
-          /Following scripts if PVM can support CORS - then can ditch Django as SOAP proxy
-          /script src="/static/jquerysoap/jquery.soap.js" type="text/javascript"
-          /script src="/static/jquerysoap/jquery.xml2json.js" type="text/javascript"
-          /script src="/static/pvminterface.js" type="text/javascript"
-          script src="/static/knockout/ko.min.js" type="text/javascript"
-          script src="/static/knockout/knockout-postbox.min.js" type="text/javascript"
-          script src="/static/requirejs/require.min.js" type="text/javascript"
-          script src="/static/pvmajax.js" type="text/javascript"
-          script src="/static/pvmgroups.js" type="text/javascript"
-          script src="/static/pvmmethods.js" type="text/javascript"
-          script src="/static/soapMethods.js" type="text/javascript"
-          script src="/static/performancetasks.js" type="text/javascript"
-          script src="/static/performance.js" type="text/javascript"
-          script src="/static/pvmusers.js" type="text/javascript"
-          script src="/static/pvminstances.js" type="text/javascript"
-          script src="/static/pvmsettings.js" type="text/javascript"
-          script src="/static/ready.js" type="text/javascript"
+      link href="/static/css/pvm.css" rel="stylesheet"
+      /Framework JS
+      script src="/static/jquery/jquery.min.js" type="text/javascript"
+      script src="/static/knockout/ko.min.js" type="text/javascript"
+      script src="/static/knockout/knockout-postbox.min.js" type="text/javascript"
+      script src="/static/requirejs/require.min.js" type="text/javascript"
+
+      /PVM base modules
+        /Following scripts if PVM can support CORS - then can ditch Django as SOAP proxy
+        /script src="/static/jquerysoap/jquery.soap.js" type="text/javascript"
+        /script src="/static/jquerysoap/jquery.xml2json.js" type="text/javascript"
+        /script src="/static/pvminterface.js" type="text/javascript"
+      script src="/static/pvmajax.js" type="text/javascript"
+      script src="/static/methods/pvmmethods.js" type="text/javascript"
+      script src="/static/soapMethods.js" type="text/javascript"
+
+      /PVM Performance scripts - for iterating over methods and measuring timing
+      /script src="/static/performance/performancetasks.js" type="text/javascript"
+      /script src="/static/performance/performance.js" type="text/javascript"
+
+      /PVM Components scripts
+      script src="/static/groups/pvmgroups.js" type="text/javascript"
+      script src="/static/users/pvmusers.js" type="text/javascript"
+      script src="/static/instances/pvminstances.js" type="text/javascript"
+      /settings and sub components
+      script src="/static/settings/pvmsettings.js" type="text/javascript"
+      script src="/static/settings/cloudcredentials/cloudcredentials.js" type="text/javascript"
+      script src="/static/settings/syslog/syslog.js" type="text/javascript"
+      script src="/static/settings/ha/ha.js" type="text/javascript"
+      script src="/static/settings/keymanager/keymanager.js" type="text/javascript"
+      script src="/static/settings/networking/networking.js" type="text/javascript"
+      script src="/static/settings/exportsettings/exportsettings.js" type="text/javascript"
+      script src="/static/settings/shutdown/shutdown.js" type="text/javascript"
+      script src="/static/settings/physicalserver/physicalserver.js" type="text/javascript"
+      script src="/static/settings/snmp/snmp.js" type="text/javascript"
+      script src="/static/settings/unattendedreboot/unattendedreboot.js" type="text/javascript"
+
+
+      /Navigation & Main Container
+      script src="/static/content/pvmcontent.js" type="text/javascript"
+
+      /Engage
+      script src="/static/ready.js" type="text/javascript"
+
   body
-    .col-md-3
-      groups
-    .col-md-3
-      users
-    .col-md-9
-      settings
-    .col-md-9
-      clouds
-    .col-md-9
-      methods
 
-
-
-    /  /.row
-    /  /  clouds
-    /  .row
-    /    groups params="groups: $parent.pvmGroups"
+    pvmcontent

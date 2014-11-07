@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "exportsettings.js",
+  "sourceRoot": "",
+  "sources": [
+    "exportsettings.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA,KAAA,QAAA;;CAAA,CAAA,MAAA,EAAa,MAAb;CAEE,CAEQ,EAFR,KAAA;CAIkB,EAAA,GAAA,kBAAA;;CAAd;;CAJJ;CAAA,CAQI,EADJ,IAAA;CACI,CAAU,IAAV,CAAA,0EAAA;MARJ;CAFF,GAAA;CAAA"
+}

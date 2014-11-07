@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "shutdown.js",
+  "sourceRoot": "",
+  "sources": [
+    "shutdown.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA;CAAA"
+}

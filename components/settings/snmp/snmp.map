@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "snmp.js",
+  "sourceRoot": "",
+  "sources": [
+    "snmp.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA;CAAA"
+}

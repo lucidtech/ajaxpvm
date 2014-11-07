@@ -1,0 +1,21 @@
+h2 KeySecure Details
+.input-group
+  label Username
+  input type="text" data-bind="userName"
+.input-group
+  label Password
+  input type="password" data-bind="value: password"
+button.btn.btn-default data-bind="click: updateCredentials, enable: dirtyCredentials(), css: {'btn-primary' : dirtyCredentials()}" update
+.input-group
+  label IP address
+  input type="text" data-bind="value: ipAddress"
+.input-group
+  label Port
+  select data-bind="value: port, options: ['TCP','SSL']"
+.input-group
+  label protocol
+  input type="text" data-bind="value: protocol"
+.input-group
+  label certificate
+  input type="text" data-bind="value: certificate"
+button.btn.btn-default data-bind="click: updateCredentials, enable: dirtyProperties(), css: {'btn-primary' : dirtyProperties()}" update

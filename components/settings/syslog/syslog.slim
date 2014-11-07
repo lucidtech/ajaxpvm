@@ -1,0 +1,57 @@
+h1 Syslog Settings
+h2 Server Forwarding Configuration
+p Syslog Server 1
+form role="form"
+  .form-group
+    label IP
+    input.form-control type="text" data-bind="value: ip1"
+  .form-group
+    label Port
+    input.form-control type="text" data-bind="value: port1"
+p Syslog Server 2
+form role="form"
+  .form-group
+    label IP
+    input.form-control type="text" data-bind="value: ip2"
+  .form-group
+    label Port
+    input.form-control type="text" data-bind="value: port2"
+  .form-group
+    label Enable Syslog Forwarding
+    input.form-control type="checkbox" data-bind="checked: forwarding"
+button.btn.btn-default data-bind="click: setSyslogServerInfo, enable: dirtyInfo(), css: {'btn-primary' : dirtyInfo()}" Update
+button.btn.btn-default data-bind="click: getSyslogServerInfo, visible: dirtyInfo()" Cancel
+h2 Internal Syslog Purge Jobs
+table.table.table-hover
+  thead
+    tr
+      th ID
+      th Description
+      th Last Run
+      th
+  tbody
+    /! ko foreach: logPurgeJobs
+    tr
+      td data-bind="text: id"
+      td data-bind="text: $parent.formatCategory(category, tillday) + ' ' + $parent.formatFrequency(freq, day) + ' at ' + hour + ':' + $parent.formatMinute(minute)"
+      td data-bind="text: lastRunResult"
+      td
+        button.btn.btn-default data-bind="click: $parent.deleteJob" Delete Job
+    /! /ko
+    tr
+      td
+      td colspan="2"
+        ' Purge
+        select data-bind="value: newPurgeJob.category, options: newPurgeJobOptions.category"
+        '  logs older than
+        select data-bind="value: newPurgeJob.tillday, options: newPurgeJobOptions.tillday"
+        '  day(s),
+        select data-bind="value: newPurgeJob.freq, options: newPurgeJobOptions.freq"
+        span data-bind="text: newPurgeJob.freq() == 'daily' ? '' : newPurgeJob.freq() == 'weekly' ? ' on ' : ' on the ' "
+        select data-bind="visible: newPurgeJob.freq() != 'daily', value: newPurgeJob.day, options: newPurgeJob.freq() == 'weekly' ? newPurgeJobOptions.day.weekly : newPurgeJobOptions.day.monthly"
+        '  at
+        select data-bind="value: newPurgeJob.hour, options: newPurgeJobOptions.hour"
+        | :
+        select data-bind="value: newPurgeJob.minute, options: newPurgeJobOptions.minute"
+      td
+        button.btn.btn-default data-bind="click: addJob" Add Job

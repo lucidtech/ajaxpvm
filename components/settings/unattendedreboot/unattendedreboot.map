@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "unattendedreboot.js",
+  "sourceRoot": "",
+  "sources": [
+    "unattendedreboot.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA;CAAA"
+}

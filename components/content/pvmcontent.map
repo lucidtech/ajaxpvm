@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "pvmcontent.js",
+  "sourceRoot": "",
+  "sources": [
+    "pvmcontent.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA,KAAA,IAAA;;CAAA,CAAA,MAAA,EAAa,EAAb;CAEE,CACQ,EADR,KAAA;CAGkB,EAAA,GAAA,cAAA;CACZ,CAAkB,CAAF,CAAf,IAAD,EAAgB,CAAhB;CAAA,CACkB,CAAF,CAAf,CAAD,EAAmC,CAAnC,CAAmC,CAAA,KAAnB;CAFlB,MAAc;;CAAd;;CAHJ;CAAA,CAQE,EADF,IAAA;CACE,CAAU,IAAV,CAAA,mDAAA;MARF;CAFF,GAAA;CAAA"
+}

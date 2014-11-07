@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "pvmsettings.js",
+  "sourceRoot": "",
+  "sources": [
+    "pvmsettings.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA,KAAA,KAAA;KAAA,6EAAA;;CAAA,CAAA,MAAA,EAAa;CAEX,CACQ,EADR,KAAA;CAGiB,EAAA,GAAA,eAAA;CACX,GAAC,IAAD,2BAAA;CADF,MAAa;;CAAb,EAGO,CAAP,KAAO;;CAHP;;CAHJ;CAAA,CASE,EADF,IAAA;CACE,CAAU,IAAV,CAAA,qDAAA;MATF;CAFF,GAAA;CAAA"
+}

@@ -87,16 +87,18 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    '/Users/lucidtech/pvmoderngui/static',
-    # os.path.join(BASE_DIR, '/templates/'),
+    # '/Users/lucidtech/pvmoderngui/static',
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'components'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
 
 TEMPLATE_DIRS = (
-    '/Users/lucidtech/pvmoderngui/templates',
-    # os.path.join(BASE_DIR, '/templates/'),
+    # '/Users/lucidtech/pvmoderngui/templates',
+    os.path.join(BASE_DIR, 'templates'),
+    os.path.join(BASE_DIR, 'components'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
